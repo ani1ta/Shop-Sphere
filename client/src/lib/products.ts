@@ -5,6 +5,18 @@ import sneakersImage from '@assets/generated_images/luxury_leather_sneakers.png'
 import watchImage from '@assets/generated_images/gold_minimalist_watch.png';
 import bagImage from '@assets/generated_images/designer_leather_handbag.png';
 
+// New Imports
+import menShirtImage from "@assets/generated_images/men's_classic_white_shirt.png";
+import menTShirtImage from "@assets/generated_images/men's_premium_t-shirt.png";
+import menJeansImage from "@assets/generated_images/men's_denim_jeans.png";
+import menSuitImage from "@assets/generated_images/men's_tailored_suit.png";
+import womenSkirtImage from "@assets/generated_images/women's_pleated_skirt.png";
+import womenBlouseImage from "@assets/generated_images/women's_silk_blouse.png";
+import womenTraditionalImage from "@assets/generated_images/women's_luxury_traditional_wear.png";
+import womenHeelsImage from "@assets/generated_images/women's_high_heels.png";
+import menBootsImage from "@assets/generated_images/men's_leather_boots.png";
+import sunglassesImage from "@assets/generated_images/designer_sunglasses.png";
+
 export type Product = {
   id: number;
   name: string;
@@ -19,38 +31,92 @@ export type Product = {
 const adjectives = ["Midnight", "Obsidian", "Ivory", "Matte", "Vintage", "Royal", "Urban", "Classic", "Modern", "Heritage", "Sleek", "Bold", "Noir", "Crimson", "Slate", "Ethereal", "Storm", "Onyx", "Pearl", "Azure"];
 const materials = ["Silk", "Leather", "Wool", "Cashmere", "Velvet", "Denim", "Suede", "Cotton", "Linen", "Satin", "Tweed", "Mohair", "Corduroy"];
 
-const menTypes = ["Trench", "Blazer", "Oxford", "Loafer", "Trouser", "Bomber", "Sweater", "Overcoat", "Suit", "Vest", "Chino", "Parka"];
-const womenTypes = ["Slip Dress", "Blouse", "Skirt", "Gown", "Heels", "Cardigan", "Scarf", "Kimono", "Maxi Dress", "Tunic", "Wrap Dress", "Jumpsuit"];
-const accTypes = ["Tote", "Chronograph", "Wallet", "Belt", "Sunglasses", "Clutch", "Satchel", "Weekender", "Cufflinks", "Scarf", "Hat", "Gloves"];
-const footwearTypes = ["Sneaker", "Boot", "Derby", "Monk Strap", "Sandal", "Runner", "High Top", "Loafer", "Mule", "Chelsea Boot"];
+// Men Types
+const menTypes = [
+  "Trench", "Overcoat", "Bomber", // Coats -> menImage
+  "Oxford", "Shirt", // Shirts -> menShirtImage
+  "Suit", "Blazer", "Vest", // Formal -> menSuitImage
+  "T-Shirt", "Sweater", // Casual Tops -> menTShirtImage
+  "Trouser", "Chino", "Jeans" // Bottoms -> menJeansImage
+];
+
+// Women Types
+const womenTypes = [
+  "Slip Dress", "Gown", "Maxi Dress", "Wrap Dress", // Dresses -> womenImage
+  "Blouse", "Cardigan", "Top", // Tops -> womenBlouseImage
+  "Skirt", // Skirts -> womenSkirtImage
+  "Kimono", "Traditional Set", "Saree", "Kaftan" // Traditional -> womenTraditionalImage
+];
+
+// Accessory Types
+const accTypes = [
+  "Tote", "Clutch", "Satchel", "Weekender", "Wallet", // Bags -> bagImage
+  "Chronograph", "Watch", // Watches -> watchImage
+  "Sunglasses", "Shades" // Glasses -> sunglassesImage
+];
+
+// Footwear Types
+const footwearTypes = [
+  "Sneaker", "Runner", "High Top", // Sneakers -> sneakersImage
+  "Boot", "Chelsea Boot", "Derby", "Monk Strap", "Loafer", // Boots/Leather -> menBootsImage
+  "Heels", "Sandal", "Pump" // Heels -> womenHeelsImage
+];
+
+function getImageForType(category: string, type: string): string {
+  // Men Mapping
+  if (category === "Men") {
+    if (["Trench", "Overcoat", "Bomber"].includes(type)) return menImage;
+    if (["Oxford", "Shirt"].includes(type)) return menShirtImage;
+    if (["Suit", "Blazer", "Vest"].includes(type)) return menSuitImage;
+    if (["T-Shirt", "Sweater"].includes(type)) return menTShirtImage;
+    if (["Trouser", "Chino", "Jeans"].includes(type)) return menJeansImage;
+    return menImage;
+  }
+  
+  // Women Mapping
+  if (category === "Women") {
+    if (["Slip Dress", "Gown", "Maxi Dress", "Wrap Dress"].includes(type)) return womenImage;
+    if (["Blouse", "Cardigan", "Top"].includes(type)) return womenBlouseImage;
+    if (["Skirt"].includes(type)) return womenSkirtImage;
+    if (["Kimono", "Traditional Set", "Saree", "Kaftan"].includes(type)) return womenTraditionalImage;
+    return womenImage;
+  }
+
+  // Accessories Mapping
+  if (category === "Accessories") {
+    if (["Tote", "Clutch", "Satchel", "Weekender", "Wallet"].includes(type)) return bagImage;
+    if (["Chronograph", "Watch"].includes(type)) return watchImage;
+    if (["Sunglasses", "Shades"].includes(type)) return sunglassesImage;
+    return bagImage;
+  }
+
+  // Footwear Mapping
+  if (category === "Footwear") {
+    if (["Sneaker", "Runner", "High Top"].includes(type)) return sneakersImage;
+    if (["Boot", "Chelsea Boot", "Derby", "Monk Strap", "Loafer"].includes(type)) return menBootsImage;
+    if (["Heels", "Sandal", "Pump"].includes(type)) return womenHeelsImage;
+    return sneakersImage;
+  }
+
+  return menImage;
+}
 
 function generateCategoryProducts(category: string, count: number, startId: number): Product[] {
   const categoryProducts: Product[] = [];
   
-  for (let i = 0; i < count; i++) {
-    let name = "";
-    let image = "";
-    let types: string[] = [];
+  let types: string[] = [];
+  if (category === "Men") types = menTypes;
+  else if (category === "Women") types = womenTypes;
+  else if (category === "Accessories") types = accTypes;
+  else types = footwearTypes;
 
+  for (let i = 0; i < count; i++) {
     const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
     const mat = materials[Math.floor(Math.random() * materials.length)];
-
-    if (category === "Men") {
-      types = menTypes;
-      image = menImage;
-    } else if (category === "Women") {
-      types = womenTypes;
-      image = womenImage;
-    } else if (category === "Accessories") {
-      types = accTypes;
-      image = Math.random() > 0.5 ? watchImage : bagImage;
-    } else { // Footwear
-      types = footwearTypes;
-      image = sneakersImage;
-    }
-
     const type = types[Math.floor(Math.random() * types.length)];
-    name = `${adj} ${mat} ${type}`;
+    
+    const name = `${adj} ${mat} ${type}`;
+    const image = getImageForType(category, type);
 
     categoryProducts.push({
       id: startId + i,
