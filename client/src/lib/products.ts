@@ -16,124 +16,72 @@ export type Product = {
 };
 
 // Base data for generation
-const adjectives = ["Midnight", "Obsidian", "Ivory", "Matte", "Vintage", "Royal", "Urban", "Classic", "Modern", "Heritage", "Sleek", "Bold", "Noir", "Crimson", "Slate", "Ethereal"];
-const materials = ["Silk", "Leather", "Wool", "Cashmere", "Velvet", "Denim", "Suede", "Cotton", "Linen", "Satin"];
-const menTypes = ["Trench", "Blazer", "Oxford", "Loafer", "Trouser", "Bomber", "Sweater", "Overcoat"];
-const womenTypes = ["Slip Dress", "Blouse", "Skirt", "Gown", "Heels", "Cardigan", "Scarf", "Kimono"];
-const accTypes = ["Tote", "Chronograph", "Wallet", "Belt", "Sunglasses", "Clutch", "Satchel", "Weekender"];
-const footwearTypes = ["Sneaker", "Boot", "Derby", "Monk Strap", "Sandal", "Runner", "High Top"];
+const adjectives = ["Midnight", "Obsidian", "Ivory", "Matte", "Vintage", "Royal", "Urban", "Classic", "Modern", "Heritage", "Sleek", "Bold", "Noir", "Crimson", "Slate", "Ethereal", "Storm", "Onyx", "Pearl", "Azure"];
+const materials = ["Silk", "Leather", "Wool", "Cashmere", "Velvet", "Denim", "Suede", "Cotton", "Linen", "Satin", "Tweed", "Mohair", "Corduroy"];
 
-const images = {
-  Men: menImage,
-  Women: womenImage,
-  Accessories: [watchImage, bagImage],
-  Footwear: sneakersImage,
-};
+const menTypes = ["Trench", "Blazer", "Oxford", "Loafer", "Trouser", "Bomber", "Sweater", "Overcoat", "Suit", "Vest", "Chino", "Parka"];
+const womenTypes = ["Slip Dress", "Blouse", "Skirt", "Gown", "Heels", "Cardigan", "Scarf", "Kimono", "Maxi Dress", "Tunic", "Wrap Dress", "Jumpsuit"];
+const accTypes = ["Tote", "Chronograph", "Wallet", "Belt", "Sunglasses", "Clutch", "Satchel", "Weekender", "Cufflinks", "Scarf", "Hat", "Gloves"];
+const footwearTypes = ["Sneaker", "Boot", "Derby", "Monk Strap", "Sandal", "Runner", "High Top", "Loafer", "Mule", "Chelsea Boot"];
 
-function generateProducts(count: number): Product[] {
-  const products: Product[] = [];
+function generateCategoryProducts(category: string, count: number, startId: number): Product[] {
+  const categoryProducts: Product[] = [];
   
-  // Add our handcrafted featured items first
-  products.push(
-    {
-      id: 1,
-      name: "Classic Wool Trench",
-      price: 895,
-      category: "Men",
-      image: menImage,
-      description: "Italian wool blend trench coat in slate grey.",
-      isNew: true
-    },
-    {
-      id: 2,
-      name: "Silk Evening Slip",
-      price: 450,
-      category: "Women",
-      image: womenImage,
-      description: "Pure mulberry silk slip dress in midnight blue.",
-      isNew: true
-    },
-    {
-      id: 3,
-      name: "Archive Leather Sneaker",
-      price: 320,
-      category: "Footwear",
-      image: sneakersImage,
-      description: "Hand-crafted leather sneakers with minimal detailing.",
-      isNew: true
-    },
-    {
-      id: 4,
-      name: "Obsidian Chronograph",
-      price: 2100,
-      category: "Accessories",
-      image: watchImage,
-      description: "Swiss movement automatic watch with sapphire crystal.",
-      isNew: true
-    },
-    {
-      id: 5,
-      name: "Signature Tote",
-      price: 1250,
-      category: "Accessories",
-      image: bagImage,
-      description: "Full-grain leather tote with brass hardware."
-    },
-    {
-      id: 6,
-      name: "Merino Knit Sweater",
-      price: 280,
-      category: "Men",
-      image: menImage,
-      description: "Fine gauge merino wool sweater in charcoal."
-    }
-  );
-
-  // Generate the rest
-  for (let i = 7; i <= count; i++) {
-    const categoryOptions = ["Men", "Women", "Accessories", "Footwear"];
-    const category = categoryOptions[Math.floor(Math.random() * categoryOptions.length)];
-    
+  for (let i = 0; i < count; i++) {
     let name = "";
     let image = "";
-    
+    let types: string[] = [];
+
     const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
     const mat = materials[Math.floor(Math.random() * materials.length)];
-    
+
     if (category === "Men") {
-      const type = menTypes[Math.floor(Math.random() * menTypes.length)];
-      name = `${adj} ${mat} ${type}`;
+      types = menTypes;
       image = menImage;
     } else if (category === "Women") {
-      const type = womenTypes[Math.floor(Math.random() * womenTypes.length)];
-      name = `${adj} ${mat} ${type}`;
+      types = womenTypes;
       image = womenImage;
     } else if (category === "Accessories") {
-      const type = accTypes[Math.floor(Math.random() * accTypes.length)];
-      name = `${adj} ${type}`;
-      // Randomly pick watch or bag
+      types = accTypes;
       image = Math.random() > 0.5 ? watchImage : bagImage;
-    } else {
-      const type = footwearTypes[Math.floor(Math.random() * footwearTypes.length)];
-      name = `${adj} ${mat} ${type}`;
+    } else { // Footwear
+      types = footwearTypes;
       image = sneakersImage;
     }
 
-    products.push({
-      id: i,
+    const type = types[Math.floor(Math.random() * types.length)];
+    name = `${adj} ${mat} ${type}`;
+
+    categoryProducts.push({
+      id: startId + i,
       name,
-      price: Math.floor(Math.random() * 2000) + 150, // Price between 150 and 2150
+      price: Math.floor(Math.random() * 2000) + 150,
       category,
       image,
-      description: `A unique ${name.toLowerCase()} designed for the modern connoisseur.`,
-      isNew: Math.random() > 0.8 // 20% chance of being new
+      description: `A unique ${name.toLowerCase()} designed for the modern connoisseur. Crafted from premium ${mat.toLowerCase()}.`,
+      isNew: Math.random() > 0.8
     });
   }
-
-  return products;
+  return categoryProducts;
 }
 
-export const products = generateProducts(200);
+function generateAllProducts(): Product[] {
+  let allProducts: Product[] = [];
+  let currentId = 1;
+
+  // Generate 100 items for each category
+  const categories = ["Men", "Women", "Accessories", "Footwear"];
+  
+  categories.forEach(cat => {
+    const products = generateCategoryProducts(cat, 100, currentId);
+    allProducts = [...allProducts, ...products];
+    currentId += 100;
+  });
+
+  return allProducts;
+}
+
+export const products = generateAllProducts();
 
 export const categories = [
   { name: "Men's Collection", image: menImage, link: "/shop?category=Men" },
