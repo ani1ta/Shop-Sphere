@@ -4,6 +4,7 @@ import Shop from "@/pages/shop";
 import ProductPage from "@/pages/product";
 import NotFound from "@/pages/not-found";
 import { AuthProvider } from "@/lib/auth";
+import { CartProvider } from "@/lib/cart";
 import { Toaster } from "@/components/ui/toaster";
 
 function Router() {
@@ -20,8 +21,10 @@ function Router() {
 function App() {
   return (
     <AuthProvider>
-      <Router />
-      <Toaster />
+      <CartProvider>
+        <Router />
+        <Toaster />
+      </CartProvider>
     </AuthProvider>
   );
 }
