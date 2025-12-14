@@ -2,7 +2,7 @@ import { Product } from "@/lib/cart";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import { useLocation } from "wouter";
 
 interface ProductCardProps {
@@ -22,48 +22,67 @@ export function ProductCard({ product, className }: ProductCardProps) {
   return (
     <div 
       onClick={() => setLocation(`/product/${product.id}`)}
-      className={cn("group bg-white border border-transparent hover:shadow-lg hover:border-border/50 transition-all duration-200 rounded-sm p-4 flex flex-col items-center text-center cursor-pointer relative", className)}
+      className={cn(
+        "group bg-white rounded-xl p-4 cursor-pointer relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100/50",
+        className
+      )}
     >
       
-      {/* Wishlist Icon */}
-      <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-        <Heart className="h-5 w-5 text-gray-400 hover:text-red-500 transition-colors" />
+      {/* Badges */}
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
+        {discount > 40 && (
+          <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm">
+            -{discount}%
+          </span>
+        )}
+        {Math.random() > 0.8 && (
+          <span className="bg-black text-white text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm uppercase tracking-wider">
+            New
+          </span>
+        )}
       </div>
 
-      <div className="relative aspect-square w-full mb-4 overflow-hidden">
+      {/* Wishlist Icon */}
+      <button className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500 hover:bg-white shadow-sm transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+        <Heart className="h-4 w-4" />
+      </button>
+
+      {/* Image Container */}
+      <div className="relative aspect-[4/5] w-full mb-4 overflow-hidden rounded-lg bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors">
         <img
           src={product.image}
           alt={product.name}
-          className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-contain mix-blend-multiply p-4 transition-transform duration-700 group-hover:scale-110"
         />
+        
+        {/* Quick Add Button on Image */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              addItem(product);
+            }}
+            size="sm"
+            className="rounded-full bg-white text-black hover:bg-black hover:text-white shadow-lg font-semibold px-6 h-9"
+          >
+            <ShoppingBag className="mr-2 h-3 w-3" />
+            Quick Add
+          </Button>
+        </div>
       </div>
 
-      <div className="flex flex-col items-center gap-1 w-full">
-        <h3 className="font-medium text-sm text-gray-900 line-clamp-1 group-hover:text-primary transition-colors" title={product.name}>
+      {/* Details */}
+      <div className="space-y-2">
+        <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">{product.category}</div>
+        <h3 className="font-semibold text-gray-900 leading-tight group-hover:text-primary transition-colors line-clamp-1" title={product.name}>
           {product.name}
         </h3>
         
-        <div className="flex items-center gap-2 mt-1">
-          <span className="font-bold text-base">₹{product.price.toLocaleString()}</span>
-          <span className="text-xs text-gray-500 line-through">₹{originalPrice.toLocaleString()}</span>
-          <span className="text-xs font-bold text-accent">{discount}% off</span>
-        </div>
-
-        <div className="flex gap-1 text-[10px] text-gray-400 font-medium mt-1">
-           {Math.random() > 0.5 && <span className="border border-gray-200 px-1 rounded">Free delivery</span>}
-           {Math.random() > 0.7 && <span className="text-red-500 font-bold">Only {Math.floor(Math.random() * 5) + 1} left</span>}
+        <div className="flex items-baseline gap-2 pt-1">
+          <span className="font-bold text-lg text-gray-900">₹{product.price.toLocaleString()}</span>
+          <span className="text-sm text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
         </div>
       </div>
-
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          addItem(product);
-        }}
-        className="w-full mt-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary hover:bg-blue-600 h-9 text-xs font-semibold uppercase tracking-wide rounded-sm"
-      >
-        Add to Cart
-      </Button>
     </div>
   );
 }
