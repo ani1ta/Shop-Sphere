@@ -3,6 +3,7 @@ import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Heart } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface ProductCardProps {
   product: Product;
@@ -11,6 +12,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className }: ProductCardProps) {
   const { addItem } = useCart();
+  const [, setLocation] = useLocation();
 
   // Generate a random discount between 10% and 80%
   const discount = Math.floor(Math.random() * (80 - 10 + 1)) + 10;
@@ -18,7 +20,10 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const originalPrice = Math.floor(product.price / (1 - discount / 100));
 
   return (
-    <div className={cn("group bg-white border border-transparent hover:shadow-lg hover:border-border/50 transition-all duration-200 rounded-sm p-4 flex flex-col items-center text-center cursor-pointer relative", className)}>
+    <div 
+      onClick={() => setLocation(`/product/${product.id}`)}
+      className={cn("group bg-white border border-transparent hover:shadow-lg hover:border-border/50 transition-all duration-200 rounded-sm p-4 flex flex-col items-center text-center cursor-pointer relative", className)}
+    >
       
       {/* Wishlist Icon */}
       <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
