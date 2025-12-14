@@ -10,10 +10,13 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { LoginModal } from "@/components/auth/LoginModal";
+import { useAuth } from "@/lib/auth";
 
 export function Navbar() {
   const { count, setIsOpen } = useCart();
   const [location] = useLocation();
+  const { user } = useAuth();
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-white shadow-sm border-b border-border">
@@ -63,14 +66,8 @@ export function Navbar() {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Button variant="ghost" className="bg-white hover:bg-primary hover:text-white text-primary border border-border px-8 rounded-sm h-8 font-semibold transition-colors">
-            Login
-          </Button>
           
-          <a href="#" className="flex items-center gap-2 hover:text-primary transition-colors">
-            <Store className="h-4 w-4" />
-            <span>Become a Seller</span>
-          </a>
+          <LoginModal />
 
           <div className="group relative cursor-pointer flex items-center gap-1 hover:text-primary transition-colors">
              <span>More</span>
