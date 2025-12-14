@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Product } from "./cart";
+import confetti from "canvas-confetti";
 
 type WishlistContextType = {
   items: Product[];
@@ -24,6 +25,16 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
       if (prev.some((item) => item.id === product.id)) return prev;
       return [...prev, product];
     });
+
+    // Heart confetti
+    confetti({
+      particleCount: 30,
+      scalar: 1.2,
+      shapes: ['circle'],
+      colors: ['#ef4444', '#f87171'],
+      origin: { y: 0.5, x: 0.5 }
+    });
+
     toast({
       title: "Added to Wishlist",
       description: `${product.name} has been added to your wishlist.`,

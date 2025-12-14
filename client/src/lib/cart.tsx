@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useToast } from "@/hooks/use-toast";
+import confetti from "canvas-confetti";
 
 export type Product = {
   id: number;
@@ -45,6 +46,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [...prev, { ...product, quantity: 1 }];
     });
     setIsOpen(true);
+    
+    // Confetti effect
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#2874f0', '#fb641b', '#ffffff']
+    });
+
     toast({
       title: "Added to cart",
       description: `${product.name} is now in your cart.`,
