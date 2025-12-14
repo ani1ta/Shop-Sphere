@@ -3,15 +3,19 @@ import { products, Product } from "@/lib/products";
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
-import { Star, ShoppingCart, Truck, RotateCcw, ShieldCheck, Heart, Share2 } from "lucide-react";
+import { useWishlist } from "@/lib/wishlist";
+import { Star, ShoppingCart, Truck, RotateCcw, ShieldCheck, Heart, Share2, Zap } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import NotFound from "./not-found";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProductPage() {
   const [match, params] = useRoute("/product/:id");
   const { addItem } = useCart();
+  const { toggleItem, isInWishlist } = useWishlist();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const { toast } = useToast();
 
   if (!match || !params) return <NotFound />;
 
@@ -26,23 +30,38 @@ export default function ProductPage() {
   const reviewCount = Math.floor(Math.random() * 2000) + 50;
 
   const sizes = ["S", "M", "L", "XL", "XXL"];
+  const isLiked = isInWishlist(product.id);
+
+  const handleBuyNow = () => {
+    toast({
+      title: "Proceeding to Checkout",
+      description: `Starting purchase for ${product.name}`,
+    });
+    // In a real app, this would redirect to checkout
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 pb-10">
+    <div className="min-h-screen bg-gray-50 pb-20">
       <Navbar />
       
-      <div className="container mx-auto px-4 pt-20">
-        <div className="bg-white shadow-sm border border-gray-200 rounded-sm overflow-hidden">
+      <div className="container mx-auto px-4 pt-24 md:pt-28">
+        <div className="bg-white shadow-lg border border-gray-100 rounded-2xl overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
             
             {/* Left Column: Images (Sticky) */}
-            <div className="md:col-span-5 p-4 border-b md:border-b-0 md:border-r border-gray-200 bg-white relative">
-              <div className="absolute top-4 right-4 z-10 flex flex-col gap-3">
-                <button className="h-10 w-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors">
-                  <Heart className="h-5 w-5" />
+            <div className="md:col-span-5 p-6 border-b md:border-b-0 md:border-r border-gray-100 bg-white relative">
+              <div className="absolute top-6 right-6 z-10 flex flex-col gap-3">
+                <button 
+                  onClick={() => toggleItem(product)}
+                  className={cn(
+                    "h-12 w-12 rounded-full shadow-md border border-gray-100 flex items-center justify-center transition-all hover:scale-110",
+                    isLiked ? "bg-red-50 text-red-500 border-red-100" : "bg-white text-gray-400 hover:text-red-500"
+                  )}
+                >
+                  <Heart className={cn("h-6 w-6", isLiked && "fill-current")} />
                 </button>
-                <button className="h-10 w-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-gray-400 hover:text-blue-500 transition-colors">
-                  <Share2 className="h-5 w-5" />
+                <button className="h-12 w-12 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-gray-400 hover:text-blue-500 transition-all hover:scale-110">
+                  <Share2 className="h-6 w-6" />
                 </button>
               </div>
               
@@ -50,83 +69,73 @@ export default function ProductPage() {
                 <img 
                   src={product.image} 
                   alt={product.name} 
-                  className="max-h-[500px] w-full object-contain hover:scale-105 transition-transform duration-500" 
+                  className="max-h-[500px] w-full object-contain hover:scale-105 transition-transform duration-500 drop-shadow-xl" 
                 />
               </div>
               
               <div className="flex justify-center gap-4 mt-8 px-4">
                 <Button 
-                  className="flex-1 bg-[#ff9f00] hover:bg-[#f39400] text-white font-bold h-12 uppercase"
+                  className="flex-1 bg-white hover:bg-gray-50 text-black border border-gray-200 font-bold h-14 uppercase tracking-wide shadow-sm hover:shadow-md transition-all text-base rounded-xl"
                   onClick={() => addItem(product)}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Add to Cart
                 </Button>
-                <Button className="flex-1 bg-[#fb641b] hover:bg-[#e45b18] text-white font-bold h-12 uppercase">
+                <Button 
+                  className="flex-1 bg-primary hover:bg-blue-600 text-white font-bold h-14 uppercase tracking-wide shadow-lg hover:shadow-primary/30 transition-all text-base rounded-xl"
+                  onClick={handleBuyNow}
+                >
+                  <Zap className="mr-2 h-5 w-5 fill-current" />
                   Buy Now
                 </Button>
               </div>
             </div>
 
             {/* Right Column: Details */}
-            <div className="md:col-span-7 p-6">
+            <div className="md:col-span-7 p-8 md:p-10 bg-white">
               {/* Breadcrumb-ish */}
-              <div className="text-xs text-gray-500 mb-4 flex items-center gap-1">
-                <span>Home</span> &gt; <span>{product.category}</span> &gt; <span className="text-gray-900 truncate max-w-[200px]">{product.name}</span>
+              <div className="text-sm font-medium text-gray-400 mb-6 flex items-center gap-2">
+                <span className="hover:text-primary cursor-pointer transition-colors">Home</span> 
+                <span className="text-gray-300">/</span> 
+                <span className="hover:text-primary cursor-pointer transition-colors">{product.category}</span> 
+                <span className="text-gray-300">/</span> 
+                <span className="text-gray-900 truncate max-w-[200px] font-semibold">{product.name}</span>
               </div>
 
-              <h1 className="text-xl md:text-2xl font-medium text-gray-900 mb-2">
+              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
                 {product.name}
               </h1>
 
-              <div className="flex items-center gap-3 mb-4">
-                <div className="flex items-center gap-1 bg-green-600 text-white px-2 py-0.5 rounded text-xs font-bold">
-                  {rating} <Star className="h-3 w-3 fill-current" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold">
+                  {rating} <Star className="h-3.5 w-3.5 fill-current" />
                 </div>
-                <span className="text-gray-500 text-sm font-medium">{reviewCount.toLocaleString()} Ratings & reviews</span>
-                <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fa_62673a.png" alt="Assured" className="h-5" />
+                <span className="text-gray-500 text-sm font-medium">{reviewCount.toLocaleString()} Verified Ratings</span>
               </div>
 
-              <div className="flex items-end gap-3 mb-4">
-                <span className="text-3xl font-bold text-gray-900">₹{product.price.toLocaleString()}</span>
-                <span className="text-base text-gray-500 line-through">₹{originalPrice.toLocaleString()}</span>
-                <span className="text-base font-bold text-green-600">{discount}% off</span>
-              </div>
-
-              {/* Offers */}
-              <div className="mb-6 space-y-2">
-                <h3 className="font-bold text-sm mb-2">Available offers</h3>
-                <div className="flex items-start gap-2 text-sm">
-                   <img src="https://rukminim1.flixcart.com/www/36/36/promos/06/09/2016/c22c9fc4-0555-4460-8401-bf5c28d7ba29.png?q=90" className="h-4 w-4 mt-0.5" />
-                   <span><span className="font-bold">Bank Offer</span> 5% Unlimited Cashback on Flipkart Axis Bank Credit Card</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm">
-                   <img src="https://rukminim1.flixcart.com/www/36/36/promos/06/09/2016/c22c9fc4-0555-4460-8401-bf5c28d7ba29.png?q=90" className="h-4 w-4 mt-0.5" />
-                   <span><span className="font-bold">Bank Offer</span> 10% off on SBI Credit Card transactions, up to ₹1000</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm">
-                   <img src="https://rukminim1.flixcart.com/www/36/36/promos/06/09/2016/c22c9fc4-0555-4460-8401-bf5c28d7ba29.png?q=90" className="h-4 w-4 mt-0.5" />
-                   <span><span className="font-bold">Special Price</span> Get extra 20% off (price inclusive of discount)</span>
-                </div>
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="text-4xl md:text-5xl font-bold text-gray-900">₹{product.price.toLocaleString()}</span>
+                <span className="text-xl text-gray-400 line-through font-medium">₹{originalPrice.toLocaleString()}</span>
+                <span className="text-lg font-bold text-green-600 bg-green-50 px-3 py-1 rounded-lg">{discount}% off</span>
               </div>
 
               {/* Size Selection (if clothing) */}
               {(product.category === "Men" || product.category === "Women" || product.category === "Footwear") && (
-                <div className="mb-6">
-                  <div className="flex items-center gap-4 mb-2">
-                    <span className="text-sm font-medium text-gray-500 w-20">Size</span>
-                    <span className="text-xs font-bold text-primary cursor-pointer">Size Chart</span>
+                <div className="mb-8">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-base font-bold text-gray-900">Select Size</span>
+                    <span className="text-sm font-bold text-primary cursor-pointer hover:underline">Size Chart</span>
                   </div>
-                  <div className="flex gap-2 pl-24">
+                  <div className="flex gap-3">
                     {sizes.map(size => (
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
                         className={cn(
-                          "h-10 w-10 rounded border text-sm font-bold flex items-center justify-center transition-all",
+                          "h-12 w-12 rounded-xl border-2 text-base font-bold flex items-center justify-center transition-all",
                           selectedSize === size 
                             ? "border-primary text-primary bg-blue-50" 
-                            : "border-gray-200 text-gray-900 hover:border-primary"
+                            : "border-gray-200 text-gray-700 hover:border-primary hover:text-primary"
                         )}
                       >
                         {size}
@@ -136,72 +145,56 @@ export default function ProductPage() {
                 </div>
               )}
 
+              <div className="h-px bg-gray-100 w-full mb-8" />
+
               {/* Delivery Info */}
-              <div className="mb-6">
-                 <div className="flex items-center gap-4 mb-2">
-                    <span className="text-sm font-medium text-gray-500 w-20">Delivery</span>
-                    <div className="relative">
-                      <input 
-                        type="text" 
-                        placeholder="Enter Pincode" 
-                        className="border-b-2 border-primary text-sm font-medium text-gray-900 w-40 pb-1 focus:outline-none placeholder:text-gray-400"
-                      />
-                      <span className="text-xs font-bold text-primary absolute right-0 bottom-1 cursor-pointer">Check</span>
+              <div className="mb-8">
+                 <div className="flex flex-col gap-4">
+                    <span className="text-base font-bold text-gray-900">Delivery Options</span>
+                    <div className="flex items-center gap-4">
+                      <div className="relative flex-1 max-w-xs">
+                        <input 
+                          type="text" 
+                          placeholder="Enter Pincode" 
+                          className="w-full bg-gray-50 border-gray-200 rounded-lg h-12 px-4 font-medium focus:outline-none focus:ring-2 focus:ring-primary/20"
+                        />
+                        <span className="text-sm font-bold text-primary absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer hover:underline">Check</span>
+                      </div>
+                      <div className="text-sm text-gray-500">
+                         <div className="flex items-center gap-2 mb-1 text-gray-900">
+                           <Truck className="h-4 w-4 text-green-600" />
+                           <span className="font-bold">Free Delivery</span> by Tomorrow
+                         </div>
+                         <p>Order within <span className="text-red-500 font-bold">2 hrs 15 mins</span></p>
+                      </div>
                     </div>
-                 </div>
-                 <div className="pl-24 text-sm">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-bold">Delivery by 11 PM, Tomorrow</span>
-                      <span className="text-green-600">| Free</span>
-                      <span className="text-gray-500 line-through">₹40</span>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      if ordered before 5:59 PM
-                    </p>
                  </div>
               </div>
 
               {/* Highlights */}
-              <div className="mb-6">
-                 <div className="flex gap-4">
-                    <span className="text-sm font-medium text-gray-500 w-20 flex-shrink-0">Highlights</span>
-                    <ul className="text-sm space-y-2 list-disc pl-4 text-gray-800">
-                      <li>Genuine Product</li>
-                      <li>Contactless Delivery</li>
-                      <li>High Quality Material</li>
-                      <li>7 Day Return Policy</li>
-                      <li>Cash on Delivery available</li>
-                    </ul>
-                 </div>
-              </div>
-
-              {/* Seller Info */}
-              <div className="mb-6 border border-gray-100 p-4 rounded bg-gray-50/50">
-                 <div className="flex gap-4">
-                    <span className="text-sm font-medium text-gray-500 w-20 flex-shrink-0">Seller</span>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-bold text-primary">RetailNet</span>
-                        <div className="flex items-center gap-1 bg-primary text-white px-1.5 py-0.5 rounded-sm text-[10px] font-bold">
-                           4.8 <Star className="h-2 w-2 fill-current" />
-                        </div>
-                      </div>
-                      <ul className="text-xs space-y-1 list-disc pl-4 text-gray-500 mt-2">
-                        <li>7 Days Service Center Replacement/Repair</li>
-                        <li>GST invoice available</li>
-                      </ul>
-                    </div>
-                 </div>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-100">
+                     <ShieldCheck className="h-6 w-6 text-primary mt-0.5" />
+                     <div>
+                        <h4 className="font-bold text-gray-900 text-sm">Genuine Product</h4>
+                        <p className="text-xs text-gray-500 mt-1">Sourced directly from brand</p>
+                     </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-100">
+                     <RotateCcw className="h-6 w-6 text-primary mt-0.5" />
+                     <div>
+                        <h4 className="font-bold text-gray-900 text-sm">7 Day Returns</h4>
+                        <p className="text-xs text-gray-500 mt-1">Easy return & exchange policy</p>
+                     </div>
+                  </div>
               </div>
 
               {/* Description */}
-              <div className="border border-gray-200 rounded-sm">
-                <div className="p-4 border-b border-gray-200">
-                  <h2 className="text-lg font-bold">Product Description</h2>
-                </div>
-                <div className="p-4 text-sm text-gray-700 leading-relaxed">
+              <div className="bg-gray-50 rounded-2xl p-6">
+                <h2 className="text-lg font-bold mb-3">Product Description</h2>
+                <div className="text-gray-600 leading-relaxed text-sm space-y-4">
                   <p>{product.description}</p>
-                  <p className="mt-4">
+                  <p>
                     Experience the perfect blend of style and comfort with this masterpiece. 
                     Whether you are heading to a party or a casual outing, this item will elevate your look. 
                     Made with high-quality materials to ensure durability and a premium feel.

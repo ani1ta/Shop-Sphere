@@ -1,5 +1,6 @@
 import { Product } from "@/lib/cart";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Heart, ShoppingBag } from "lucide-react";
@@ -12,12 +13,15 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className }: ProductCardProps) {
   const { addItem } = useCart();
+  const { toggleItem, isInWishlist } = useWishlist();
   const [, setLocation] = useLocation();
 
   // Generate a random discount between 10% and 80%
   const discount = Math.floor(Math.random() * (80 - 10 + 1)) + 10;
   // Calculate original price
   const originalPrice = Math.floor(product.price / (1 - discount / 100));
+  
+  const isLiked = isInWishlist(product.id);
 
   return (
     <div 
@@ -43,8 +47,19 @@ export function ProductCard({ product, className }: ProductCardProps) {
       </div>
 
       {/* Wishlist Icon */}
-      <button className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500 hover:bg-white shadow-sm transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
-        <Heart className="h-4 w-4" />
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleItem(product);
+        }}
+        className={cn(
+          "absolute top-3 right-3 z-10 p-2 rounded-full backdrop-blur-sm shadow-sm transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0",
+          isLiked 
+            ? "bg-red-50 text-red-500 opacity-100 translate-y-0" 
+            : "bg-white/80 text-gray-400 hover:text-red-500 hover:bg-white"
+        )}
+      >
+        <Heart className={cn("h-4 w-4", isLiked && "fill-current")} />
       </button>
 
       {/* Image Container */}

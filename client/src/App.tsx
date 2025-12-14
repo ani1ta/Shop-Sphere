@@ -5,6 +5,7 @@ import ProductPage from "@/pages/product";
 import NotFound from "@/pages/not-found";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
+import { WishlistProvider } from "@/lib/wishlist";
 import { Toaster } from "@/components/ui/toaster";
 
 function Router() {
@@ -22,8 +23,10 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Router />
-        <Toaster />
+        <WishlistProvider>
+          <Router />
+          <Toaster />
+        </WishlistProvider>
       </CartProvider>
     </AuthProvider>
   );
