@@ -9,6 +9,8 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import NotFound from "./not-found";
 import { useToast } from "@/hooks/use-toast";
+import { WishlistDrawer } from "@/components/layout/WishlistDrawer";
+import { CartDrawer } from "@/components/layout/CartDrawer";
 
 export default function ProductPage() {
   const [match, params] = useRoute("/product/:id");
@@ -43,6 +45,8 @@ export default function ProductPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <Navbar />
+      <WishlistDrawer />
+      <CartDrawer />
       
       <div className="container mx-auto px-4 pt-24 md:pt-28">
         <div className="bg-white shadow-lg border border-gray-100 rounded-2xl overflow-hidden">

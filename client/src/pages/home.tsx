@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { CartDrawer } from "@/components/layout/CartDrawer";
+import { WishlistDrawer } from "@/components/layout/WishlistDrawer";
 import { ProductCard } from "@/components/ui/product-card";
 import { products, banners, categoryIcons } from "@/lib/products";
 import { Button } from "@/components/ui/button";
@@ -76,6 +77,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50/50 pb-20">
       <Navbar />
       <CartDrawer />
+      <WishlistDrawer />
 
       <div className="pt-24 md:pt-28 pb-12">
         

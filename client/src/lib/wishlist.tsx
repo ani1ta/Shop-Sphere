@@ -8,12 +8,15 @@ type WishlistContextType = {
   removeItem: (id: number) => void;
   isInWishlist: (id: number) => boolean;
   toggleItem: (product: Product) => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 };
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Product[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
 
   const addItem = (product: Product) => {
@@ -48,7 +51,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <WishlistContext.Provider value={{ items, addItem, removeItem, isInWishlist, toggleItem }}>
+    <WishlistContext.Provider value={{ items, addItem, removeItem, isInWishlist, toggleItem, isOpen, setIsOpen }}>
       {children}
     </WishlistContext.Provider>
   );

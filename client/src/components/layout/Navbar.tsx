@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { ShoppingCart, Search, Menu, Heart, Bell } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
@@ -14,7 +15,8 @@ import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/lib/auth";
 
 export function Navbar() {
-  const { count, setIsOpen } = useCart();
+  const { count, setIsOpen: setIsCartOpen } = useCart();
+  const { items: wishlistItems, setIsOpen: setIsWishlistOpen } = useWishlist();
   const [location] = useLocation();
   const { user } = useAuth();
   const [scrolled, setScrolled] = useState(false);
@@ -84,19 +86,28 @@ export function Navbar() {
              </Button>
           } />
 
-          <Button variant="ghost" size="icon" className="rounded-full text-gray-600 hover:text-primary hover:bg-blue-50">
-             <Heart className="h-5 w-5" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="rounded-full text-gray-600 hover:text-red-500 hover:bg-red-50 relative transition-all"
+            onClick={() => setIsWishlistOpen(true)}
+          >
+             <Heart className={cn("h-5 w-5", wishlistItems.length > 0 && "fill-current text-red-500")} />
+             {wishlistItems.length > 0 && (
+               <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white animate-pulse" />
+             )}
           </Button>
 
-          <Button variant="ghost" size="icon" className="rounded-full text-gray-600 hover:text-primary hover:bg-blue-50">
+          <Button variant="ghost" size="icon" className="rounded-full text-gray-600 hover:text-primary hover:bg-blue-50 relative">
              <Bell className="h-5 w-5" />
+             <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-orange-400 border border-white" />
           </Button>
 
           <button 
-            onClick={() => setIsOpen(true)}
-            className="flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-primary transition-all shadow-lg hover:shadow-primary/30 active:scale-95 ml-2"
+            onClick={() => setIsCartOpen(true)}
+            className="flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-primary transition-all shadow-lg hover:shadow-primary/30 active:scale-95 ml-2 group"
           >
-            <ShoppingCart className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4 group-hover:animate-bounce" />
             <span className="font-medium text-sm">Cart</span>
             {count > 0 && (
               <span className="bg-white text-primary text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
@@ -110,7 +121,7 @@ export function Navbar() {
         <div className="flex md:hidden items-center gap-4 ml-auto">
           <Search className="h-6 w-6 text-gray-600" />
           <button 
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsCartOpen(true)}
             className="relative"
           >
             <ShoppingCart className="h-6 w-6 text-gray-600" />
