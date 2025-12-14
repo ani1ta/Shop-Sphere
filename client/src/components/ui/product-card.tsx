@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Heart, ShoppingBag } from "lucide-react";
 import { useLocation } from "wouter";
+import { motion } from "framer-motion";
 
 interface ProductCardProps {
   product: Product;
@@ -24,10 +25,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const isLiked = isInWishlist(product.id);
 
   return (
-    <div 
+    <motion.div 
       onClick={() => setLocation(`/product/${product.id}`)}
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className={cn(
-        "group bg-white rounded-xl p-4 cursor-pointer relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100/50",
+        "group bg-white rounded-2xl p-4 cursor-pointer relative transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 border border-gray-100/50",
         className
       )}
     >
@@ -47,7 +50,8 @@ export function ProductCard({ product, className }: ProductCardProps) {
       </div>
 
       {/* Wishlist Icon */}
-      <button 
+      <motion.button 
+        whileTap={{ scale: 0.8 }}
         onClick={(e) => {
           e.stopPropagation();
           toggleItem(product);
@@ -60,14 +64,16 @@ export function ProductCard({ product, className }: ProductCardProps) {
         )}
       >
         <Heart className={cn("h-4 w-4", isLiked && "fill-current")} />
-      </button>
+      </motion.button>
 
       {/* Image Container */}
-      <div className="relative aspect-[4/5] w-full mb-4 overflow-hidden rounded-lg bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors">
-        <img
+      <div className="relative aspect-[4/5] w-full mb-4 overflow-hidden rounded-xl bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors">
+        <motion.img
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.5 }}
           src={product.image}
           alt={product.name}
-          className="h-full w-full object-contain mix-blend-multiply p-4 transition-transform duration-700 group-hover:scale-110"
+          className="h-full w-full object-contain mix-blend-multiply p-4"
         />
         
         {/* Quick Add Button on Image */}
@@ -98,6 +104,6 @@ export function ProductCard({ product, className }: ProductCardProps) {
           <span className="text-sm text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
