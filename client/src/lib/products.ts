@@ -75,6 +75,27 @@ import footStock8 from '@assets/stock_images/luxury_footwear_snea_14e26eda.jpg';
 import footStock9 from '@assets/stock_images/luxury_footwear_snea_8e43ba5e.jpg';
 import footStock10 from '@assets/stock_images/luxury_footwear_snea_75ad98ba.jpg';
 
+// Banners
+import banner1 from '@assets/stock_images/horizontal_banner_sa_8ce22d57.jpg';
+import banner2 from '@assets/stock_images/horizontal_banner_sa_912b07af.jpg';
+import banner3 from '@assets/stock_images/horizontal_banner_sa_ec0d6bb3.jpg';
+
+// Category Icons
+import iconFashion from '@assets/stock_images/icon_fashion_categor_5187693b.jpg';
+import iconElectronics from '@assets/stock_images/icon_electronics_cat_ead9482d.jpg';
+import iconHome from '@assets/stock_images/icon_home_appliances_418bc6ce.jpg';
+import iconBeauty from '@assets/stock_images/icon_beauty_products_ff5fd86d.jpg';
+import iconToys from '@assets/stock_images/icon_toys_category_c_31745e4a.jpg';
+
+export const banners = [banner1, banner2, banner3];
+export const categoryIcons = {
+  Fashion: iconFashion,
+  Electronics: iconElectronics,
+  Home: iconHome,
+  Beauty: iconBeauty,
+  Toys: iconToys
+};
+
 
 export type Product = {
   id: number;

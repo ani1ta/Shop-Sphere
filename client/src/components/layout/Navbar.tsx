@@ -1,8 +1,9 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingCart, Search, User, Store, MoreVertical, Menu } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -12,45 +13,28 @@ import {
 
 export function Navbar() {
   const { count, setIsOpen } = useCart();
-  const [scrolled, setScrolled] = useState(false);
   const [location] = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const isHome = location === "/";
-
   return (
-    <nav
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-        scrolled || !isHome
-          ? "bg-background/80 backdrop-blur-md border-border py-4"
-          : "bg-transparent py-6 text-white"
-      )}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+    <nav className="fixed top-0 w-full z-50 bg-white shadow-sm border-b border-border">
+      <div className="container mx-auto px-4 h-16 flex items-center gap-4 md:gap-8">
+        
         {/* Mobile Menu */}
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className={cn(scrolled || !isHome ? "text-foreground" : "text-white")}>
-                <Menu className="h-6 w-6" />
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6 text-foreground" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col gap-8 mt-10">
-                <Link href="/" className="text-2xl font-serif">LUMIÈRE</Link>
-                <div className="flex flex-col gap-4 text-lg">
+            <SheetContent side="left" className="w-[300px]">
+              <div className="flex flex-col gap-6 mt-6">
+                <Link href="/" className="text-xl font-bold text-primary italic">Shopping Hub</Link>
+                <div className="flex flex-col gap-4 text-base font-medium">
                   <Link href="/">Home</Link>
-                  <Link href="/shop">Shop All</Link>
-                  <Link href="/shop?category=Men">Men</Link>
-                  <Link href="/shop?category=Women">Women</Link>
+                  <Link href="/shop">All Products</Link>
+                  <Link href="/shop?category=Men">Fashion</Link>
+                  <Link href="/shop?category=Electronics">Electronics</Link>
                   <Link href="/shop?category=Accessories">Accessories</Link>
                 </div>
               </div>
@@ -59,39 +43,68 @@ export function Navbar() {
         </div>
 
         {/* Logo */}
-        <Link href="/" className={cn(
-          "text-2xl md:text-3xl font-serif font-bold tracking-tighter transition-colors",
-          scrolled || !isHome ? "text-primary" : "text-white"
-        )}>
-          LUMIÈRE
+        <Link href="/" className="flex-shrink-0">
+          <div className="flex flex-col leading-none">
+            <span className="text-xl md:text-2xl font-bold text-primary italic tracking-tight">Shopping Hub</span>
+            <span className="text-[10px] text-gray-400 font-medium italic hover:underline">Explore <span className="text-secondary font-bold">Plus</span></span>
+          </div>
         </Link>
 
-        {/* Desktop Links */}
-        <div className={cn(
-          "hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase transition-colors",
-          scrolled || !isHome ? "text-foreground" : "text-white/90"
-        )}>
-          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-          <Link href="/shop" className="hover:text-primary transition-colors">Shop</Link>
-          <Link href="/shop?category=Men" className="hover:text-primary transition-colors">Men</Link>
-          <Link href="/shop?category=Women" className="hover:text-primary transition-colors">Women</Link>
+        {/* Search Bar */}
+        <div className="flex-1 max-w-2xl hidden md:block">
+          <div className="relative">
+            <Input 
+              className="w-full bg-blue-50/50 border-none rounded-sm h-9 pl-4 pr-10 focus-visible:ring-0 placeholder:text-gray-500 shadow-sm"
+              placeholder="Search for Products, Brands and More"
+            />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary" />
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn("relative", scrolled || !isHome ? "text-foreground hover:bg-secondary" : "text-white hover:bg-white/10")}
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <Button variant="ghost" className="bg-white hover:bg-primary hover:text-white text-primary border border-border px-8 rounded-sm h-8 font-semibold transition-colors">
+            Login
+          </Button>
+          
+          <a href="#" className="flex items-center gap-2 hover:text-primary transition-colors">
+            <Store className="h-4 w-4" />
+            <span>Become a Seller</span>
+          </a>
+
+          <div className="group relative cursor-pointer flex items-center gap-1 hover:text-primary transition-colors">
+             <span>More</span>
+             <MoreVertical className="h-4 w-4 rotate-90" />
+          </div>
+
+          <button 
             onClick={() => setIsOpen(true)}
+            className="flex items-center gap-2 hover:text-primary transition-colors relative"
           >
-            <ShoppingBag className="h-5 w-5" />
+            <ShoppingCart className="h-5 w-5" />
+            <span>Cart</span>
             {count > 0 && (
-              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+              <span className="absolute -top-2 -right-2 h-4 w-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center font-bold">
                 {count}
               </span>
             )}
-          </Button>
+          </button>
+        </div>
+
+        {/* Mobile Search & Cart */}
+        <div className="flex md:hidden items-center gap-4 ml-auto">
+          <Search className="h-5 w-5 text-gray-600" />
+          <button 
+            onClick={() => setIsOpen(true)}
+            className="relative"
+          >
+            <ShoppingCart className="h-5 w-5 text-gray-600" />
+            {count > 0 && (
+              <span className="absolute -top-2 -right-2 h-4 w-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center font-bold">
+                {count}
+              </span>
+            )}
+          </button>
         </div>
       </div>
     </nav>
