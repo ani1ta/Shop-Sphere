@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/ui/product-card";
 import { products, banners, categoryIcons } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Timer, Sparkles, Star, MapPin, Mail } from "lucide-react";
+import { ArrowRight, Timer, Sparkles, Star, MapPin, Mail, Heart } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -214,39 +214,74 @@ export default function Home() {
         <section className="container mx-auto px-4 mb-24">
           <div className="text-center mb-12">
             <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Top Selling</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Products</h2>
-            <p className="text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 50 experience needs</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Premium Products</h2>
+            <p className="text-gray-400">Handpicked collection of trending fashion items loved by thousands of customers</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-            {womenProducts.slice(0, 5).map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className={cn(
-                  "rounded-2xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden group cursor-pointer h-72 shadow-xl hover:shadow-2xl transition-all",
-                  vibrantColors[index % vibrantColors.length]
-                )}
-              >
-                <img 
-                  src={product.image} 
-                  className="h-40 w-40 object-contain mb-4 group-hover:scale-110 transition-transform duration-500 drop-shadow-lg"
-                />
-                <h3 className="text-white font-bold text-sm md:text-base mb-2 line-clamp-2">{product.name}</h3>
-                <div className="flex items-center justify-center gap-1 mb-3">
-                  {[...Array(4)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-yellow-300 text-yellow-300" />
-                  ))}
-                  <span className="text-xs text-white font-bold ml-1">4.{Math.floor(Math.random() * 10)}</span>
-                </div>
-                <Button className="bg-orange-500 text-white hover:bg-orange-600 rounded-full px-6 py-1 text-xs font-bold">
-                  Order Now
-                </Button>
-              </motion.div>
-            ))}
+            {womenProducts.slice(0, 5).map((product, index) => {
+              const discount = Math.floor(Math.random() * 30) + 40;
+              const rating = Math.floor(Math.random() * 2) + 4;
+              const originalPrice = Math.floor(product.price / (1 - discount/100));
+              return (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className={cn(
+                    "rounded-3xl p-6 flex flex-col justify-between text-center relative overflow-hidden group cursor-pointer h-96 shadow-xl hover:shadow-2xl hover:scale-105 transition-all",
+                    vibrantColors[index % vibrantColors.length]
+                  )}
+                >
+                  {/* Discount Badge */}
+                  <div className="absolute top-4 left-4 bg-red-500 text-white font-black text-sm px-3 py-1 rounded-full z-10 shadow-lg">
+                    -{discount}%
+                  </div>
+
+                  {/* Wishlist Icon */}
+                  <button className="absolute top-4 right-4 bg-white rounded-full p-2 hover:scale-110 transition-transform z-10 shadow-lg">
+                    <Heart className="h-5 w-5 text-gray-800" />
+                  </button>
+
+                  {/* Product Image */}
+                  <div className="flex-1 flex items-center justify-center">
+                    <img 
+                      src={product.image} 
+                      className="h-40 w-40 object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-lg"
+                    />
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="space-y-3">
+                    <h3 className="text-white font-bold text-sm md:text-base line-clamp-2">{product.name}</h3>
+                    
+                    {/* Rating */}
+                    <div className="flex items-center justify-center gap-1">
+                      {[...Array(rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-yellow-300 text-yellow-300" />
+                      ))}
+                      {[...Array(5 - rating)].map((_, i) => (
+                        <Star key={i + rating} className="h-4 w-4 text-white/30" />
+                      ))}
+                      <span className="text-xs text-white font-bold ml-1">{rating}.{Math.floor(Math.random() * 10)}</span>
+                    </div>
+
+                    {/* Prices */}
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-white font-black text-lg">₹{product.price}</span>
+                      <span className="text-white/60 text-sm line-through">₹{originalPrice}</span>
+                    </div>
+
+                    {/* Button */}
+                    <Button className="w-full bg-orange-500 text-white hover:bg-orange-600 rounded-full py-2 text-sm font-bold shadow-lg transition-all">
+                      Order Now
+                    </Button>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 
@@ -277,7 +312,7 @@ export default function Home() {
                 Winter Sale upto<br/> <span className="text-orange-400">50% Off</span>
               </h2>
               <p className="text-gray-400 text-lg mb-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit hendrerit sed tempore. Donec imperdiet viverra sollicitudes sed tempore.
+                Grab the best fashion deals of the season with massive discounts on premium clothing, footwear, and accessories. Limited time offer – shop now and save big!
               </p>
 
               {/* Features */}
