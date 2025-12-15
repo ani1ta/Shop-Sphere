@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingCart, Search, Menu, Heart, Bell, Hexagon } from "lucide-react";
+import { ShoppingCart, Search, Menu, Heart, Hexagon } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { Button } from "@/components/ui/button";
@@ -32,30 +32,32 @@ export function Navbar() {
   return (
     <nav className={cn(
       "fixed top-0 w-full z-50 transition-all duration-300",
-      scrolled ? "glass h-20 shadow-lg border-b border-white/10" : "bg-transparent h-24"
+      scrolled 
+        ? "bg-gray-950/95 backdrop-blur-xl border-b border-gray-800 h-20 shadow-lg" 
+        : "bg-gradient-to-b from-black to-transparent h-24"
     )}>
-      <div className="container mx-auto px-6 h-full flex items-center gap-8">
+      <div className="container mx-auto px-6 h-full flex items-center gap-6">
         
         {/* Mobile Menu */}
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-foreground">
+              <Button variant="ghost" size="icon" className="text-white hover:bg-gray-800">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] glass border-r border-white/20">
+            <SheetContent side="left" className="bg-gray-950 border-r border-gray-800">
               <div className="flex flex-col gap-8 mt-8">
                 <Link href="/" className="flex items-center gap-2">
-                  <Hexagon className="h-8 w-8 text-primary fill-primary/20" />
-                  <span className="text-2xl font-black tracking-tighter">PRISMA</span>
+                  <div className="h-8 w-8 bg-orange-400 rounded-lg flex items-center justify-center font-black text-black">✦</div>
+                  <span className="text-2xl font-black text-white tracking-tighter">PRISMA</span>
                 </Link>
-                <div className="flex flex-col gap-6 text-lg font-medium text-gray-600">
-                  <Link href="/">Home</Link>
-                  <Link href="/shop">All Products</Link>
-                  <Link href="/shop?category=Men">Fashion</Link>
-                  <Link href="/shop?category=Electronics">Electronics</Link>
-                  <Link href="/shop?category=Accessories">Accessories</Link>
+                <div className="flex flex-col gap-6 text-lg font-bold text-gray-300">
+                  <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
+                  <Link href="/about" className="hover:text-orange-400 transition-colors">About</Link>
+                  <Link href="/contact" className="hover:text-orange-400 transition-colors">Contact</Link>
+                  <Link href="/blog" className="hover:text-orange-400 transition-colors">Blog</Link>
+                  <Link href="/shop" className="hover:text-orange-400 transition-colors">Shop</Link>
                 </div>
               </div>
             </SheetContent>
@@ -65,24 +67,37 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group">
           <div className="flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
-            <div className="relative">
-              <Hexagon className="h-8 w-8 text-primary fill-primary/20 stroke-[2.5px]" />
-              <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="h-8 w-8 bg-orange-400 rounded-lg flex items-center justify-center font-black text-black text-base group-hover:bg-orange-500 transition-colors">
+              ✦
             </div>
-            <span className="text-2xl font-black bg-gradient-to-r from-gray-900 via-primary to-gray-900 bg-clip-text text-transparent tracking-tighter">
-              PRISMA
-            </span>
+            <span className="text-2xl font-black text-white tracking-tighter">PRISMA</span>
           </div>
         </Link>
 
-        {/* Search Bar - Floating Style */}
-        <div className="flex-1 max-w-2xl hidden md:block group">
-          <div className="relative transition-all duration-300 transform focus-within:scale-[1.02]">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="/">
+            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">Home</a>
+          </Link>
+          <Link href="/about">
+            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">About</a>
+          </Link>
+          <Link href="/contact">
+            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">Contact</a>
+          </Link>
+          <Link href="/blog">
+            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">Blog</a>
+          </Link>
+        </div>
+
+        {/* Search Bar - Hidden on Mobile */}
+        <div className="flex-1 max-w-xl hidden lg:block group">
+          <div className="relative transition-all duration-300">
             <Input 
-              className="w-full bg-white/50 backdrop-blur-md border-white/50 rounded-2xl h-12 pl-12 pr-6 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:bg-white transition-all shadow-sm hover:shadow-lg hover:bg-white/80"
-              placeholder="Search for something extraordinary..."
+              className="w-full bg-gray-800/50 border border-gray-700 rounded-full h-11 pl-12 pr-6 text-white placeholder-gray-500 hover:border-orange-400/50 focus-visible:ring-1 focus-visible:ring-orange-400 focus-visible:border-orange-400 transition-all"
+              placeholder="Search fashion..."
             />
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-orange-400 transition-colors" />
           </div>
         </div>
 
@@ -90,7 +105,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           
           <LoginModal trigger={
-             <Button variant="ghost" className="rounded-full px-6 font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-all">
+             <Button className="rounded-full px-6 font-bold text-gray-300 hover:text-white hover:bg-orange-400/20 transition-all bg-transparent border border-transparent hover:border-orange-400">
                Sign In
              </Button>
           } />
@@ -98,28 +113,23 @@ export function Navbar() {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="rounded-full h-10 w-10 text-gray-600 hover:text-red-500 hover:bg-red-50 relative transition-all hover:scale-110"
+            className="rounded-full h-10 w-10 text-gray-400 hover:text-orange-400 relative transition-all hover:scale-110"
             onClick={() => setIsWishlistOpen(true)}
           >
-             <Heart className={cn("h-5 w-5", wishlistItems.length > 0 && "fill-current text-red-500")} />
+             <Heart className={cn("h-5 w-5", wishlistItems.length > 0 && "fill-current text-orange-400")} />
              {wishlistItems.length > 0 && (
-               <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white animate-pulse" />
+               <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-orange-400 border-2 border-gray-950 animate-pulse" />
              )}
-          </Button>
-
-          <Button variant="ghost" size="icon" className="rounded-full h-10 w-10 text-gray-600 hover:text-primary hover:bg-blue-50 relative hover:scale-110 transition-all">
-             <Bell className="h-5 w-5" />
-             <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-orange-400 border border-white" />
           </Button>
 
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full hover:bg-primary transition-all shadow-xl hover:shadow-primary/30 active:scale-95 ml-2 group"
+            className="flex items-center gap-3 bg-orange-400 text-black px-6 py-3 rounded-full hover:bg-orange-500 transition-all shadow-lg hover:shadow-orange-500/30 active:scale-95 ml-2 group font-bold"
           >
-            <ShoppingCart className="h-4 w-4 group-hover:animate-bounce" />
-            <span className="font-bold text-sm">Bag</span>
+            <ShoppingCart className="h-5 w-5 group-hover:animate-bounce" />
+            <span className="hidden sm:inline">Bag</span>
             {count > 0 && (
-              <span className="bg-white text-black text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
+              <span className="bg-black text-orange-400 text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
                 {count}
               </span>
             )}
@@ -127,15 +137,22 @@ export function Navbar() {
         </div>
 
         {/* Mobile Cart */}
-        <div className="flex md:hidden items-center gap-4 ml-auto">
-          <Search className="h-6 w-6 text-gray-600" />
+        <div className="flex md:hidden items-center gap-3 ml-auto">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="rounded-full h-10 w-10 text-gray-400 hover:text-orange-400 relative"
+            onClick={() => setIsWishlistOpen(true)}
+          >
+             <Heart className={cn("h-5 w-5", wishlistItems.length > 0 && "fill-current text-orange-400")} />
+          </Button>
           <button 
             onClick={() => setIsCartOpen(true)}
             className="relative"
           >
-            <ShoppingCart className="h-6 w-6 text-gray-600" />
+            <ShoppingCart className="h-6 w-6 text-gray-400 hover:text-orange-400 transition-colors" />
             {count > 0 && (
-              <span className="absolute -top-2 -right-2 h-4 w-4 rounded-full bg-primary text-white text-[10px] flex items-center justify-center font-bold">
+              <span className="absolute -top-2 -right-2 h-4 w-4 rounded-full bg-orange-400 text-black text-[10px] flex items-center justify-center font-bold">
                 {count}
               </span>
             )}
@@ -145,4 +162,3 @@ export function Navbar() {
     </nav>
   );
 }
-
