@@ -76,17 +76,17 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/">
-            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">Home</a>
+          <Link href="/" className="text-gray-300 hover:text-orange-400 font-bold transition-colors">
+            Home
           </Link>
-          <Link href="/about">
-            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">About</a>
+          <Link href="/about" className="text-gray-300 hover:text-orange-400 font-bold transition-colors">
+            About
           </Link>
-          <Link href="/contact">
-            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">Contact</a>
+          <Link href="/contact" className="text-gray-300 hover:text-orange-400 font-bold transition-colors">
+            Contact
           </Link>
-          <Link href="/blog">
-            <a className="text-gray-300 hover:text-orange-400 font-bold transition-colors">Blog</a>
+          <Link href="/blog" className="text-gray-300 hover:text-orange-400 font-bold transition-colors">
+            Blog
           </Link>
         </div>
 

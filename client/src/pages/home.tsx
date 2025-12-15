@@ -356,9 +356,9 @@ export default function Home() {
                 <p className="text-white/90 mb-8 max-w-xs">Discover stylish and sophisticated clothing for the modern man.</p>
               </div>
               <div className="flex items-end justify-between relative z-10">
-                <Link href="/shop?category=Men">
-                  <Button className="bg-white text-blue-600 hover:bg-gray-100 rounded-full px-6 font-bold">Explore</Button>
-                </Link>
+                <button onClick={() => window.location.href = '/shop?category=Men'} className="bg-white text-blue-600 hover:bg-gray-100 rounded-full px-6 py-2 font-bold transition-all hover:scale-105">
+                  Explore
+                </button>
                 <img src={menProducts[0].image} className="h-40 w-40 object-contain group-hover:scale-110 transition-transform" />
               </div>
             </motion.div>
@@ -376,9 +376,9 @@ export default function Home() {
                 <p className="text-white/90 mb-8 max-w-xs">Elevate your style with our exclusive women's collection.</p>
               </div>
               <div className="flex items-end justify-between relative z-10">
-                <Link href="/shop?category=Women">
-                  <Button className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-6 font-bold">Explore</Button>
-                </Link>
+                <button onClick={() => window.location.href = '/shop?category=Women'} className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-6 py-2 font-bold transition-all hover:scale-105">
+                  Explore
+                </button>
                 <img src={womenProducts[0].image} className="h-40 w-40 object-contain group-hover:scale-110 transition-transform" />
               </div>
             </motion.div>
@@ -395,9 +395,9 @@ export default function Home() {
                 <p className="text-white/90 text-sm mb-6">Complete your look with premium accessories.</p>
               </div>
               <div className="flex items-end justify-between relative z-10">
-                <Link href="/shop?category=Accessories">
-                  <Button className="bg-white text-pink-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold">Shop</Button>
-                </Link>
+                <button onClick={() => window.location.href = '/shop?category=Accessories'} className="bg-white text-pink-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold transition-all hover:scale-105">
+                  Shop
+                </button>
                 <img src={accessories[0].image} className="h-32 w-32 object-contain group-hover:scale-110 transition-transform" />
               </div>
             </motion.div>
@@ -414,9 +414,9 @@ export default function Home() {
                 <p className="text-white/90 text-sm mb-6">Step into style with our shoe collection.</p>
               </div>
               <div className="flex items-end justify-between relative z-10">
-                <Link href="/shop?category=Footwear">
-                  <Button className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold">Shop</Button>
-                </Link>
+                <button onClick={() => window.location.href = '/shop?category=Footwear'} className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold transition-all hover:scale-105">
+                  Shop
+                </button>
                 <img src={footwear[0].image} className="h-32 w-32 object-contain group-hover:scale-110 transition-transform" />
               </div>
             </motion.div>
