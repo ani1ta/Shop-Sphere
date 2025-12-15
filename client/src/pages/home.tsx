@@ -162,9 +162,11 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <Button className="bg-orange-400 text-black hover:bg-orange-500 rounded-full px-10 h-14 font-bold text-lg shadow-lg transition-all hover:scale-105">
-                    Order Now
-                  </Button>
+                  <Link href="/shop">
+                    <Button className="bg-orange-400 text-black hover:bg-orange-500 rounded-full px-10 h-14 font-bold text-lg shadow-lg transition-all hover:scale-105">
+                      Shop Now
+                    </Button>
+                  </Link>
                 </motion.div>
               </motion.div>
             </div>
@@ -203,12 +205,14 @@ export default function Home() {
                     selectedCategory === cat.name ? "opacity-100" : "opacity-80 hover:opacity-100"
                   )}
                 >
-                  <div className={cn(
-                    "h-24 w-24 rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl",
-                    cat.color
-                  )}>
-                    <img src={cat.icon} className="h-10 w-10 object-contain filter brightness-0 invert" />
-                  </div>
+                  <Link href="/shop">
+                    <div className={cn(
+                      "h-24 w-24 rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl cursor-pointer",
+                      cat.color
+                    )}>
+                      <img src={cat.icon} className="h-10 w-10 object-contain filter brightness-0 invert" />
+                    </div>
+                  </Link>
                   <span className="text-xs font-bold text-gray-300 group-hover:text-white transition-colors text-center max-w-[90px]">
                     {cat.name}
                   </span>
