@@ -23,6 +23,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const filters = ["All", "Men", "Women", "Footwear", "Accessories"];
 const ITEMS_PER_PAGE = 12;
@@ -99,45 +100,56 @@ export default function Shop() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-gray-900 to-black">
       <Navbar />
       <CartDrawer />
       
-      <div className="pt-32 pb-12 container mx-auto px-6">
-        <div className="flex flex-col items-center text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-serif mb-6">The Collection</h1>
-          <p className="text-muted-foreground max-w-2xl">
-            Explore our extensive catalog of {products.length} curated luxury items.
+      <div className="pt-28 pb-20 container mx-auto px-6">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center text-center mb-16"
+        >
+          <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-4">Collection</span>
+          <h1 className="text-5xl md:text-6xl font-black text-white mb-4">Premium Products</h1>
+          <p className="text-gray-400 max-w-2xl text-lg">
+            Explore our curated collection of {products.length} premium items
           </p>
-        </div>
+        </motion.div>
 
-        {/* Desktop Controls */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 sticky top-24 z-30 bg-background/95 backdrop-blur-sm py-4 border-b border-border/50">
+        {/* Controls Bar */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 sticky top-24 z-30 bg-gradient-to-r from-gray-950 via-black to-gray-950 backdrop-blur-xl py-4 px-6 rounded-2xl border border-gray-800"
+        >
           
-          {/* Mobile Filter Sheet Trigger */}
+          {/* Mobile Filter Sheet */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" className="md:hidden w-full flex gap-2">
+              <Button className="md:hidden w-full flex gap-2 bg-orange-400 text-black hover:bg-orange-500 font-bold">
                 <SlidersHorizontal className="h-4 w-4" /> Filters & Sort
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
+            <SheetContent side="left" className="bg-gray-950 border-gray-800">
               <SheetHeader>
-                <SheetTitle className="font-serif text-2xl">Filters</SheetTitle>
+                <SheetTitle className="text-white text-2xl font-black">Filters</SheetTitle>
               </SheetHeader>
               <div className="mt-8 space-y-8">
                 <div className="space-y-4">
-                  <h3 className="font-medium">Category</h3>
+                  <h3 className="text-white font-bold">Category</h3>
                   <div className="flex flex-wrap gap-2">
                     {filters.map((filter) => (
                       <button
                         key={filter}
                         onClick={() => handleFilterChange(filter)}
                         className={cn(
-                          "px-4 py-2 text-xs uppercase tracking-widest border transition-all",
+                          "px-4 py-2 text-xs uppercase tracking-widest border rounded-lg transition-all font-bold",
                           activeFilter === filter
-                            ? "bg-primary text-white border-primary"
-                            : "border-border text-muted-foreground"
+                            ? "bg-orange-400 text-black border-orange-400"
+                            : "border-gray-700 text-gray-400 hover:text-orange-400"
                         )}
                       >
                         {filter}
@@ -146,7 +158,7 @@ export default function Shop() {
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="font-medium">Price Range: ${priceRange[0]} - ${priceRange[1]}</h3>
+                  <h3 className="text-white font-bold">Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}</h3>
                   <Slider
                     defaultValue={[0, 3000]}
                     max={3000}
@@ -160,16 +172,16 @@ export default function Shop() {
           </Sheet>
 
           {/* Categories (Desktop) */}
-          <div className="hidden md:flex gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+          <div className="hidden md:flex gap-2 overflow-x-auto pb-0 no-scrollbar">
             {filters.map((filter) => (
               <button
                 key={filter}
                 onClick={() => handleFilterChange(filter)}
                 className={cn(
-                  "px-5 py-2 text-xs uppercase tracking-widest transition-all border",
+                  "px-5 py-2 text-xs uppercase tracking-widest transition-all border rounded-lg font-bold whitespace-nowrap",
                   activeFilter === filter
-                    ? "bg-primary text-white border-primary"
-                    : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    ? "bg-orange-400 text-black border-orange-400"
+                    : "border-gray-700 text-gray-400 hover:text-white hover:border-orange-400"
                 )}
               >
                 {filter}
@@ -178,12 +190,12 @@ export default function Shop() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-             {/* Search */}
+            {/* Search */}
             <div className="relative w-full md:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
               <Input 
-                placeholder="Search collection..." 
-                className="pl-9 bg-secondary/20 border-border"
+                placeholder="Search products..." 
+                className="pl-9 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus-visible:border-orange-400 focus-visible:ring-orange-400 rounded-lg"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -191,79 +203,119 @@ export default function Shop() {
 
             {/* Sort */}
             <Select value={sortOrder} onValueChange={setSortOrder}>
-              <SelectTrigger className="w-full md:w-[180px]">
+              <SelectTrigger className="w-full md:w-[180px] bg-gray-800 border-gray-700 text-white rounded-lg">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="featured">Featured</SelectItem>
-                <SelectItem value="newest">Newest Arrivals</SelectItem>
-                <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                <SelectItem value="price-desc">Price: High to Low</SelectItem>
+              <SelectContent className="bg-gray-900 border-gray-800">
+                <SelectItem value="featured" className="text-white">Featured</SelectItem>
+                <SelectItem value="newest" className="text-white">Newest Arrivals</SelectItem>
+                <SelectItem value="price-asc" className="text-white">Price: Low to High</SelectItem>
+                <SelectItem value="price-desc" className="text-white">Price: High to Low</SelectItem>
               </SelectContent>
             </Select>
           </div>
+        </motion.div>
+
+        {/* Products Count */}
+        <div className="mb-6 text-sm text-gray-400 font-medium">
+          Showing <span className="text-orange-400 font-bold">{paginatedProducts.length}</span> of <span className="text-orange-400 font-bold">{filteredProducts.length}</span> products
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16 min-h-[500px]">
-          {paginatedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[500px] mb-12">
+          {paginatedProducts.map((product, idx) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
           ))}
         </div>
 
         {/* Empty State */}
         {filteredProducts.length === 0 && (
-          <div className="text-center py-20 text-muted-foreground">
-            <p className="text-lg">No products match your criteria.</p>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <p className="text-lg text-gray-400 mb-6">No products match your criteria.</p>
             <Button 
-              variant="link" 
               onClick={() => {
                 setSearchQuery("");
                 setPriceRange([0, 3000]);
                 setActiveFilter("All");
               }}
+              className="bg-orange-400 text-black hover:bg-orange-500 font-bold rounded-full px-8"
             >
               Clear all filters
             </Button>
-          </div>
+          </motion.div>
         )}
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-20">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center items-center gap-6 mt-16"
+          >
             <Button
-              variant="outline"
-              size="icon"
               onClick={() => {
                 setCurrentPage(p => Math.max(1, p - 1));
                 scrollToTop();
               }}
               disabled={currentPage === 1}
+              className={cn(
+                "rounded-full p-3 border transition-all",
+                currentPage === 1 
+                  ? "border-gray-700 text-gray-600 cursor-not-allowed" 
+                  : "border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black"
+              )}
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
             
-            <div className="text-sm font-medium tracking-wide">
-              Page {currentPage} of {totalPages}
+            <div className="flex items-center gap-4">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => {
+                    setCurrentPage(page);
+                    scrollToTop();
+                  }}
+                  className={cn(
+                    "h-10 w-10 rounded-full font-bold transition-all",
+                    currentPage === page
+                      ? "bg-orange-400 text-black"
+                      : "border border-gray-700 text-gray-400 hover:border-orange-400 hover:text-orange-400"
+                  )}
+                >
+                  {page}
+                </button>
+              ))}
             </div>
 
             <Button
-              variant="outline"
-              size="icon"
               onClick={() => {
                 setCurrentPage(p => Math.min(totalPages, p + 1));
                 scrollToTop();
               }}
               disabled={currentPage === totalPages}
+              className={cn(
+                "rounded-full p-3 border transition-all",
+                currentPage === totalPages 
+                  ? "border-gray-700 text-gray-600 cursor-not-allowed" 
+                  : "border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black"
+              )}
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
-          </div>
+          </motion.div>
         )}
-        
-        <div className="text-center mt-6 text-xs text-muted-foreground">
-          Showing {paginatedProducts.length} of {filteredProducts.length} items
-        </div>
       </div>
     </div>
   );
