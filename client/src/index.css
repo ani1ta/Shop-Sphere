@@ -95,6 +95,11 @@
   .animate-marquee {
     animation: marquee 20s linear infinite;
   }
+
+  /* Geometric Clip Path */
+  .clip-path-polygon {
+    clip-path: polygon(50% 0%, 100% 0%, 0% 100%, 0% 100%);
+  }
 }
 
 /* Custom Scrollbar */

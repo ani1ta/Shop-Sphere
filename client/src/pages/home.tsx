@@ -5,7 +5,7 @@ import { ProductCard } from "@/components/ui/product-card";
 import { products, banners, categoryIcons } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Timer, Sparkles, TrendingUp, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Timer, Sparkles, Star, MapPin, Mail } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -18,7 +18,17 @@ import { CountdownTimer } from "@/components/ui/countdown-timer";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-// Helper for horizontal scroll sections
+const vibrantColors = [
+  "bg-orange-400",
+  "bg-blue-400",
+  "bg-purple-400",
+  "bg-pink-400",
+  "bg-cyan-400",
+  "bg-amber-400",
+  "bg-teal-400",
+  "bg-indigo-400",
+];
+
 function Section({ title, items, link, showTimer = false, subtitle }: { title: string, items: any[], link: string, showTimer?: boolean, subtitle?: string }) {
   const targetDate = new Date();
   targetDate.setHours(24, 0, 0, 0);
@@ -31,26 +41,10 @@ function Section({ title, items, link, showTimer = false, subtitle }: { title: s
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="container mx-auto px-4 mb-20"
     >
-      <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{title}</h2>
-            {showTimer && (
-              <div className="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-100 animate-pulse">
-                <Timer className="h-4 w-4" />
-                <span className="text-sm font-bold">Ending Soon</span>
-                <CountdownTimer targetDate={targetDate} />
-              </div>
-            )}
-          </div>
-          {subtitle && <p className="text-gray-500 font-medium">{subtitle}</p>}
-        </div>
-        <Link href={link}>
-          <Button variant="outline" className="group rounded-full border-gray-300 hover:border-primary hover:text-primary transition-all">
-            View All Products
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </Link>
+      <div className="text-center mb-12">
+        <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Featured</span>
+        <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">{title}</h2>
+        {subtitle && <p className="text-gray-400 font-medium">{subtitle}</p>}
       </div>
       
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -66,6 +60,14 @@ function Section({ title, items, link, showTimer = false, subtitle }: { title: s
           </motion.div>
         ))}
       </div>
+      
+      <div className="flex justify-center mt-12">
+        <Link href={link}>
+          <Button className="bg-orange-400 text-black hover:bg-orange-500 rounded-full px-10 font-bold text-lg shadow-lg">
+            View All Products <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </Link>
+      </div>
     </motion.section>
   );
 }
@@ -78,7 +80,6 @@ const categoriesBar = [
   { name: "Home", icon: categoryIcons.Home, color: "bg-orange-50 text-orange-600" },
   { name: "Beauty", icon: categoryIcons.Beauty, color: "bg-pink-50 text-pink-600" },
   { name: "Toys", icon: categoryIcons.Toys, color: "bg-yellow-50 text-yellow-600" },
-  { name: "Furniture", icon: categoryIcons.Home, color: "bg-teal-50 text-teal-600" },
 ];
 
 export default function Home() {
@@ -88,7 +89,7 @@ export default function Home() {
   const accessories = products.filter(p => p.category === "Accessories").slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-gray-50/50 pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-gray-900 to-black pb-20 overflow-x-hidden">
       <Navbar />
       <CartDrawer />
       <WishlistDrawer />
@@ -96,117 +97,110 @@ export default function Home() {
       <div className="pt-24 md:pt-28 pb-12">
         
         {/* Marquee Section */}
-        <div className="w-full overflow-hidden bg-primary text-white py-2 mb-8 transform -rotate-1 origin-left scale-110 shadow-lg">
-          <div className="animate-marquee whitespace-nowrap flex gap-16 items-center">
+        <div className="w-full overflow-hidden bg-orange-400 text-black py-3 mb-8 shadow-lg">
+          <div className="animate-marquee whitespace-nowrap flex gap-16 items-center font-bold tracking-wider">
             {[...Array(10)].map((_, i) => (
-              <div key={i} className="flex items-center gap-4 text-sm font-bold uppercase tracking-widest">
-                <Sparkles className="h-4 w-4 text-yellow-300" />
-                <span>Super Sale Live Now</span>
-                <span className="text-yellow-300">Up to 80% Off</span>
-                <Sparkles className="h-4 w-4 text-yellow-300" />
+              <div key={i} className="flex items-center gap-4 text-sm md:text-base">
+                <Sparkles className="h-5 w-5" />
+                <span>70% OFF ON ALL PRODUCTS</span>
+                <Sparkles className="h-5 w-5" />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Hero Section - Modern & Immersive */}
-        <div className="container mx-auto px-4 mb-20">
-          <div className="h-[500px] md:h-[600px] w-full">
-            {/* Main Carousel - Full Width */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, type: "spring" }}
-              className="h-full w-full rounded-[2.5rem] overflow-hidden shadow-2xl relative group perspective-1000"
-            >
-              <Carousel 
-                plugins={[Autoplay({ delay: 5000 })]}
-                className="w-full h-full"
-              >
-                <CarouselContent className="h-full">
-                  {banners.map((banner, index) => (
-                    <CarouselItem key={index} className="h-full">
-                      <div className="relative h-full w-full">
-                         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10" />
-                         <img src={banner} alt="Sale Banner" className="h-full w-full object-cover transition-transform duration-[3s] group-hover:scale-105" />
-                         <div className="absolute inset-0 z-20 flex flex-col justify-center px-12 md:px-24 max-w-4xl text-white">
-                            <motion.div
-                              initial={{ opacity: 0, x: -50 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.3 }}
-                              className="flex items-center gap-4 mb-6"
-                            >
-                              <span className="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full text-sm font-bold uppercase tracking-[0.2em] border border-white/20 text-yellow-300 shadow-lg">
-                                New Season 2025
-                              </span>
-                              <div className="h-[1px] w-20 bg-white/30 hidden md:block"></div>
-                            </motion.div>
-                            
-                            <motion.h2 
-                              initial={{ opacity: 0, y: 30 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.5 }}
-                              className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter drop-shadow-2xl"
-                            >
-                              Redefine <br/>
-                              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-white to-blue-200">Your Style</span>
-                            </motion.h2>
-                            
-                            <motion.p 
-                              initial={{ opacity: 0, y: 30 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.6 }}
-                              className="text-xl text-gray-200 mb-10 max-w-lg font-light leading-relaxed border-l-4 border-yellow-400 pl-6"
-                            >
-                              Discover the latest trends in fashion and lifestyle. curated for the bold and the beautiful.
-                            </motion.p>
+        {/* Hero Section - Bold & Geometric */}
+        <div className="container mx-auto px-4 mb-24">
+          <div className="relative h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden">
+            {/* Diagonal Geometric Shape */}
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-orange-400 via-amber-400 to-orange-500 clip-path-polygon transform -skew-x-12 z-0"></div>
+            
+            {/* Dark Background */}
+            <div className="absolute inset-0 bg-black z-0"></div>
 
-                            <motion.div
-                              initial={{ opacity: 0, y: 30 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.7 }}
-                              className="flex gap-4"
-                            >
-                              <Button className="bg-white text-black hover:bg-yellow-300 hover:scale-105 rounded-full px-12 h-16 font-bold text-lg transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                                Shop Now
-                              </Button>
-                              <Button variant="outline" className="text-white border-white/30 hover:bg-white/10 hover:border-white rounded-full px-8 h-16 font-bold text-lg backdrop-blur-sm transition-all">
-                                View Lookbook
-                              </Button>
-                            </motion.div>
-                         </div>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-8 h-16 w-16 border-white/10 bg-black/20 text-white hover:bg-white hover:text-black transition-all backdrop-blur-md hidden md:flex" />
-                <CarouselNext className="right-8 h-16 w-16 border-white/10 bg-black/20 text-white hover:bg-white hover:text-black transition-all backdrop-blur-md hidden md:flex" />
-              </Carousel>
-            </motion.div>
+            {/* Content */}
+            <div className="relative z-10 h-full flex items-center px-8 md:px-16">
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="max-w-2xl"
+              >
+                <motion.span
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-4"
+                >
+                  Super Offer
+                </motion.span>
+                
+                <motion.h1 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-6xl md:text-7xl font-black text-white mb-6 leading-none tracking-tighter"
+                >
+                  70% off on<br/> All Products<br/> <span className="text-orange-400">Sale</span>
+                </motion.h1>
+
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-gray-300 text-lg mb-8 max-w-xl leading-relaxed"
+                >
+                  Lorem nibh adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <Button className="bg-orange-400 text-black hover:bg-orange-500 rounded-full px-10 h-14 font-bold text-lg shadow-lg transition-all hover:scale-105">
+                    Order Now
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* Carousel - Positioned on right */}
+            <Carousel 
+              plugins={[Autoplay({ delay: 5000 })]}
+              className="absolute right-0 top-0 w-full md:w-1/2 h-full z-5"
+            >
+              <CarouselContent className="h-full">
+                {banners.map((banner, index) => (
+                  <CarouselItem key={index} className="h-full">
+                    <img src={banner} alt="Sale" className="h-full w-full object-cover" />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
 
-        {/* Categories - Floating Cards */}
+        {/* Categories */}
         <div className="container mx-auto px-4 mb-24">
-          <div className="flex justify-start md:justify-center gap-6 overflow-x-auto no-scrollbar pb-8 px-4">
+          <div className="flex justify-start md:justify-center gap-4 overflow-x-auto no-scrollbar pb-4">
             {categoriesBar.map((cat, idx) => (
               <Link key={idx} href="/shop">
                 <motion.div 
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05, type: "spring" }}
-                  whileHover={{ y: -10 }}
-                  className="group flex flex-col items-center gap-4 cursor-pointer min-w-[100px]"
+                  transition={{ delay: idx * 0.05 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="group flex flex-col items-center gap-2 cursor-pointer min-w-fit"
                 >
                   <div className={cn(
-                    "h-20 w-20 rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl group-hover:shadow-primary/20", 
-                    cat.color.replace('text-', 'bg-').replace('bg-', 'bg-opacity-10 text-')
+                    "h-16 w-16 rounded-xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-xl",
+                    cat.color
                   )}>
-                    <div className={cn("h-full w-full rounded-2xl opacity-10 absolute", cat.color.split(' ')[0])}></div>
-                    <img src={cat.icon} className="h-10 w-10 object-contain relative z-10 drop-shadow-md group-hover:scale-110 transition-transform" />
+                    <img src={cat.icon} className="h-8 w-8 object-contain" />
                   </div>
-                  <span className="text-sm font-bold text-gray-700 group-hover:text-primary transition-colors text-center">
+                  <span className="text-xs font-bold text-gray-300 group-hover:text-orange-400 transition-colors text-center">
                     {cat.name}
                   </span>
                 </motion.div>
@@ -214,6 +208,119 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Best Products */}
+        <section className="container mx-auto px-4 mb-24">
+          <div className="text-center mb-12">
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Top Selling</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Products</h2>
+            <p className="text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 50 experience needs</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+            {womenProducts.slice(0, 5).map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className={cn(
+                  "rounded-2xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden group cursor-pointer h-72 shadow-xl hover:shadow-2xl transition-all",
+                  vibrantColors[index % vibrantColors.length]
+                )}
+              >
+                <img 
+                  src={product.image} 
+                  className="h-40 w-40 object-contain mb-4 group-hover:scale-110 transition-transform duration-500 drop-shadow-lg"
+                />
+                <h3 className="text-white font-bold text-sm md:text-base mb-2 line-clamp-2">{product.name}</h3>
+                <div className="flex items-center justify-center gap-1 mb-3">
+                  {[...Array(4)].map((_, i) => (
+                    <Star key={i} className="h-3 w-3 fill-yellow-300 text-yellow-300" />
+                  ))}
+                  <span className="text-xs text-white font-bold ml-1">4.{Math.floor(Math.random() * 10)}</span>
+                </div>
+                <Button className="bg-orange-500 text-white hover:bg-orange-600 rounded-full px-6 py-1 text-xs font-bold">
+                  Order Now
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Winter Sale Banner */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="container mx-auto px-4 mb-24"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            {/* Image */}
+            <motion.div
+              initial={{ x: -50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              className="rounded-2xl overflow-hidden h-64 md:h-80 bg-orange-400"
+            >
+              <img src={womenProducts[0].image} className="w-full h-full object-cover" />
+            </motion.div>
+
+            {/* Content */}
+            <motion.div
+              initial={{ x: 50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+            >
+              <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-4">Special Offer</span>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+                Winter Sale upto<br/> <span className="text-orange-400">50% Off</span>
+              </h2>
+              <p className="text-gray-400 text-lg mb-8">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit hendrerit sed tempore. Donec imperdiet viverra sollicitudes sed tempore.
+              </p>
+
+              {/* Features */}
+              <div className="space-y-4 mb-8">
+                {[
+                  { icon: "✓", label: "Quality Products", color: "bg-purple-500" },
+                  { icon: "⚡", label: "Fast Delivery", color: "bg-orange-500" },
+                  { icon: "✓", label: "Easy Payment method", color: "bg-green-500" },
+                  { icon: "🎁", label: "Get Offers", color: "bg-yellow-500" },
+                ].map((feature, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className={cn("h-10 w-10 rounded-full flex items-center justify-center text-white font-bold", feature.color)}>
+                      {feature.icon}
+                    </div>
+                    <span className="text-gray-300 font-medium">{feature.label}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Newsletter */}
+        <motion.section 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="w-full bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-400 py-12 md:py-16 my-24 relative overflow-hidden"
+        >
+          <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2230%22 fill=%22white%22/></svg>')]" />
+          
+          <div className="container mx-auto px-4 relative z-10 text-center">
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Get Notified About New Products</h2>
+            <div className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="flex-1 px-6 py-3 rounded-full bg-white text-gray-900 placeholder-gray-500 font-medium focus:outline-none"
+              />
+              <Button className="bg-black text-white hover:bg-gray-900 rounded-full px-8 font-bold">
+                Subscribe
+              </Button>
+            </div>
+          </div>
+        </motion.section>
 
         {/* Flash Deals */}
         <Section 
@@ -223,191 +330,43 @@ export default function Home() {
           link="/shop?category=Men" 
           showTimer={true} 
         />
-        
-        {/* New Arrivals Section - Moved Down & Redesigned */}
-        <section className="container mx-auto px-4 mb-24">
-           <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
-             <div>
-               <motion.span 
-                 initial={{ opacity: 0, y: 10 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 className="text-primary font-bold tracking-widest uppercase text-sm mb-2 block"
-               >
-                 Just Dropped
-               </motion.span>
-               <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">New Arrivals</h2>
-             </div>
-             <Button variant="outline" className="rounded-full">View All New Items</Button>
-           </div>
 
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Featured New Item */}
-              <motion.div 
-                 initial={{ opacity: 0, scale: 0.95 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 viewport={{ once: true }}
-                 className="md:col-span-2 bg-black rounded-[2rem] p-8 md:p-12 relative overflow-hidden group min-h-[400px] flex flex-col justify-end"
-              >
-                 <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black z-0" />
-                 <img 
-                    src={menProducts[0].image} 
-                    className="absolute right-[-20%] top-[-10%] w-[80%] h-full object-contain opacity-80 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-700 z-10" 
-                 />
-                 <div className="relative z-20 max-w-md">
-                   <span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wider mb-4 inline-block">
-                     Editor's Pick
-                   </span>
-                   <h3 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
-                     {menProducts[0].name}
-                   </h3>
-                   <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 mt-4">
-                     Shop Now <ArrowRight className="ml-2 h-4 w-4" />
-                   </Button>
-                 </div>
-              </motion.div>
-
-              {/* Standard New Items */}
-              {womenProducts.slice(0, 2).map((product, idx) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <ProductCard product={product} className="h-full bg-gray-50 border-none shadow-none hover:shadow-xl hover:bg-white" />
-                </motion.div>
-              ))}
-           </div>
-        </section>
-
-        {/* Featured Banner Section */}
-        <motion.section 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="container mx-auto px-4 mb-24"
-        >
-          <div className="relative rounded-[2.5rem] overflow-hidden bg-black h-[400px] flex items-center shadow-2xl">
-             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
-             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
-             
-             <div className="relative z-10 px-8 md:px-20 max-w-2xl text-white">
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="bg-yellow-400 text-black text-xs font-black px-3 py-1 uppercase tracking-widest rounded-sm">Exclusive</span>
-                  <span className="text-yellow-400 font-bold tracking-widest text-sm uppercase">Limited Edition</span>
-                </div>
-                <h2 className="text-5xl md:text-7xl font-black mb-8 leading-none tracking-tight">
-                  Premium <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-600">Luxury</span>
-                </h2>
-                <p className="text-gray-300 text-lg mb-10 max-w-md leading-relaxed">
-                  Experience the pinnacle of craftsmanship. Our curated selection of premium goods defines sophistication.
-                </p>
-                <Button className="bg-white text-black hover:bg-yellow-400 border-none rounded-full px-10 h-14 font-bold text-lg shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all hover:scale-105">
-                  Explore Collection
-                </Button>
-             </div>
-             
-             <motion.img 
-               initial={{ x: 200, opacity: 0, rotate: 10 }}
-               whileInView={{ x: 0, opacity: 1, rotate: 0 }}
-               transition={{ duration: 1, type: "spring" }}
-               src={accessories[0].image} 
-               className="absolute -right-10 md:right-20 bottom-[-10%] h-[130%] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] hidden md:block" 
-             />
-          </div>
-        </motion.section>
-
-        {/* Trending Now Section - Moved Down */}
-        <section className="container mx-auto px-4 mb-24">
-           <div className="text-center mb-12">
-             <span className="text-primary font-bold tracking-widest uppercase text-sm mb-2 block">What's Hot</span>
-             <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">Trending Now</h2>
-             <p className="text-gray-500 max-w-2xl mx-auto text-lg">
-               The most coveted items of the season, curated just for you. Don't miss out on these viral favorites.
-             </p>
-           </div>
-           
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Trending Large Card 1 */}
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="bg-orange-50 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px]"
-              >
-                 <div className="relative z-10">
-                   <h3 className="text-2xl font-bold mb-2 text-orange-900">Summer Essentials</h3>
-                   <Button variant="link" className="text-orange-600 p-0 font-bold">Shop Collection <ArrowRight className="ml-1 h-4 w-4" /></Button>
-                 </div>
-                 <img src={womenProducts[0].image} className="absolute right-0 bottom-0 w-48 h-48 object-contain group-hover:scale-110 transition-transform duration-500" />
-              </motion.div>
-
-              {/* Trending Large Card 2 */}
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="bg-blue-50 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px]"
-              >
-                 <div className="relative z-10">
-                   <h3 className="text-2xl font-bold mb-2 text-blue-900">Tech Upgrades</h3>
-                   <Button variant="link" className="text-blue-600 p-0 font-bold">View Gadgets <ArrowRight className="ml-1 h-4 w-4" /></Button>
-                 </div>
-                 <img src={accessories[1].image} className="absolute right-0 bottom-0 w-48 h-48 object-contain group-hover:scale-110 transition-transform duration-500" />
-              </motion.div>
-
-              {/* Trending Large Card 3 */}
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="bg-purple-50 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px] md:col-span-2 lg:col-span-1"
-              >
-                 <div className="relative z-10">
-                   <h3 className="text-2xl font-bold mb-2 text-purple-900">Accessories</h3>
-                   <Button variant="link" className="text-purple-600 p-0 font-bold">See More <ArrowRight className="ml-1 h-4 w-4" /></Button>
-                 </div>
-                 <img src={accessories[0].image} className="absolute right-0 bottom-0 w-48 h-48 object-contain group-hover:scale-110 transition-transform duration-500" />
-              </motion.div>
-           </div>
-           
-           {/* Additional Trending List */}
-           <div className="mt-12">
-             <Section title="" items={womenProducts} link="/shop?category=Women" />
-           </div>
-        </section>
-
-        {/* Grid Section - Bento Style */}
-        <section className="container mx-auto px-4 mb-24">
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="bg-gray-100 p-10 rounded-[2.5rem] shadow-none hover:shadow-2xl transition-all duration-500 flex items-center justify-between group cursor-pointer relative overflow-hidden"
-              >
-                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-200 rounded-full blur-[80px] opacity-0 group-hover:opacity-50 transition-opacity" />
-                 <div className="relative z-10">
-                    <h3 className="text-4xl font-bold mb-4 text-gray-900">Footwear</h3>
-                    <p className="text-gray-500 mb-8 max-w-[200px]">Step into the future with our latest kicks.</p>
-                    <Button className="bg-black text-white rounded-full px-8 group-hover:px-10 transition-all">
-                      Shop Now
-                    </Button>
-                 </div>
-                 <img src={footwear[0].image} className="h-48 w-48 object-contain group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 relative z-10 drop-shadow-xl" />
-              </motion.div>
-
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="bg-black p-10 rounded-[2.5rem] shadow-none hover:shadow-2xl transition-all duration-500 flex items-center justify-between group cursor-pointer relative overflow-hidden"
-              >
-                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500 rounded-full blur-[80px] opacity-20 group-hover:opacity-40 transition-opacity" />
-                 <div className="relative z-10">
-                    <h3 className="text-4xl font-bold mb-4 text-white">Tech</h3>
-                    <p className="text-gray-400 mb-8 max-w-[200px]">Next-gen gadgets for the modern pro.</p>
-                    <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 group-hover:px-10 transition-all">
-                      Discover
-                    </Button>
-                 </div>
-                 <img src={accessories[1].image} className="h-48 w-48 object-contain group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500 relative z-10 drop-shadow-xl" />
-              </motion.div>
-           </div>
-        </section>
-
+        {/* Best Sellers */}
         <Section title="Best Sellers" items={footwear} link="/shop?category=Footwear" />
+
+        {/* Testimonials */}
+        <section className="container mx-auto px-4 mb-24">
+          <div className="text-center mb-12">
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Feedback</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Testimonials</h2>
+            <p className="text-gray-400">What our customers are saying about experience</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { name: "Victor", text: "Lorem ipsum dolor sit amet consectetur, adipiscing elit. Hiberis nobis hoc impendium.", avatar: "👨" },
+              { name: "Satya Nadella", text: "Lorem ipsum dolor sit amet consectetur, adipiscing elit. Hiberis nobis hoc impendium.", avatar: "👨" },
+              { name: "Viral Kohli", text: "Lorem ipsum dolor sit amet consectetur, adipiscing elit. Hiberis nobis hoc impendium.", avatar: "👨" },
+            ].map((testimonial, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-slate-800 rounded-2xl p-6 border border-slate-700 hover:border-orange-400 transition-all"
+              >
+                <p className="text-gray-400 text-sm mb-6">{testimonial.text}</p>
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-full bg-orange-400 flex items-center justify-center text-xl">
+                    {testimonial.avatar}
+                  </div>
+                  <span className="text-white font-bold">{testimonial.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
