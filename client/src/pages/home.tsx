@@ -74,13 +74,13 @@ function Section({ title, items, link, showTimer = false, subtitle }: { title: s
 }
 
 const categoriesBar = [
-  { name: "Top Offers", icon: categoryIcons.Beauty, color: "bg-red-50 text-red-600" }, 
-  { name: "Mobiles", icon: categoryIcons.Electronics, color: "bg-blue-50 text-blue-600" },
-  { name: "Fashion", icon: categoryIcons.Fashion, color: "bg-purple-50 text-purple-600" },
-  { name: "Electronics", icon: categoryIcons.Electronics, color: "bg-indigo-50 text-indigo-600" },
-  { name: "Home", icon: categoryIcons.Home, color: "bg-orange-50 text-orange-600" },
-  { name: "Beauty", icon: categoryIcons.Beauty, color: "bg-pink-50 text-pink-600" },
-  { name: "Toys", icon: categoryIcons.Toys, color: "bg-yellow-50 text-yellow-600" },
+  { name: "Top Offers", icon: categoryIcons.Beauty, color: "bg-gradient-to-br from-red-500 to-red-600", textColor: "text-white" }, 
+  { name: "Mobiles", icon: categoryIcons.Electronics, color: "bg-gradient-to-br from-blue-500 to-blue-600", textColor: "text-white" },
+  { name: "Fashion", icon: categoryIcons.Fashion, color: "bg-gradient-to-br from-purple-500 to-purple-600", textColor: "text-white" },
+  { name: "Electronics", icon: categoryIcons.Electronics, color: "bg-gradient-to-br from-indigo-500 to-indigo-600", textColor: "text-white" },
+  { name: "Home", icon: categoryIcons.Home, color: "bg-gradient-to-br from-orange-500 to-orange-600", textColor: "text-white" },
+  { name: "Beauty", icon: categoryIcons.Beauty, color: "bg-gradient-to-br from-pink-500 to-pink-600", textColor: "text-white" },
+  { name: "Toys", icon: categoryIcons.Toys, color: "bg-gradient-to-br from-yellow-500 to-yellow-600", textColor: "text-white" },
 ];
 
 export default function Home() {
@@ -192,16 +192,16 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="group flex flex-col items-center gap-2 cursor-pointer min-w-fit"
+                  whileHover={{ scale: 1.08, y: -5 }}
+                  className="group flex flex-col items-center gap-3 cursor-pointer min-w-fit"
                 >
                   <div className={cn(
-                    "h-16 w-16 rounded-xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-xl",
+                    "h-20 w-20 rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl group-hover:shadow-current border-2 border-transparent group-hover:border-white/20",
                     cat.color
                   )}>
-                    <img src={cat.icon} className="h-8 w-8 object-contain" />
+                    <img src={cat.icon} className="h-10 w-10 object-contain filter brightness-0 invert" />
                   </div>
-                  <span className="text-xs font-bold text-gray-300 group-hover:text-orange-400 transition-colors text-center">
+                  <span className="text-xs font-bold text-gray-300 group-hover:text-white transition-colors text-center max-w-[80px]">
                     {cat.name}
                   </span>
                 </motion.div>

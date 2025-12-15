@@ -83,10 +83,8 @@ export function Footer() {
                 { label: "Blog", href: "/blog" },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}>
-                    <a className="text-gray-400 hover:text-orange-400 transition-colors text-sm font-medium cursor-pointer">
-                      {link.label}
-                    </a>
+                  <Link href={link.href} className="text-gray-400 hover:text-orange-400 transition-colors text-sm font-medium cursor-pointer">
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -109,10 +107,8 @@ export function Footer() {
                 { label: "Blog", href: "/blog" },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}>
-                    <a className="text-gray-400 hover:text-orange-400 transition-colors text-sm font-medium cursor-pointer">
-                      {link.label}
-                    </a>
+                  <Link href={link.href} className="text-gray-400 hover:text-orange-400 transition-colors text-sm font-medium cursor-pointer">
+                    {link.label}
                   </Link>
                 </li>
               ))}
