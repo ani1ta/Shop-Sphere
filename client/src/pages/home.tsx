@@ -19,6 +19,8 @@ import { CountdownTimer } from "@/components/ui/countdown-timer";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 
 const vibrantColors = [
   "bg-orange-400",
@@ -86,6 +88,8 @@ const categoriesBar = [
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("Men");
+  const { addItem } = useCart();
+  const { toggleItem, isInWishlist } = useWishlist();
   
   const menProducts = products.filter(p => p.category === "Men").slice(0, 10);
   const womenProducts = products.filter(p => p.category === "Women").slice(0, 10);
@@ -241,6 +245,7 @@ export default function Home() {
               const discount = Math.floor(Math.random() * 30) + 40;
               const rating = Math.floor(Math.random() * 2) + 4;
               const originalPrice = Math.floor(product.price / (1 - discount/100));
+              const isLiked = isInWishlist(product.id);
               return (
                 <motion.div
                   key={product.id}
@@ -259,9 +264,21 @@ export default function Home() {
                   </div>
 
                   {/* Wishlist Icon */}
-                  <button className="absolute top-4 right-4 bg-white rounded-full p-2 hover:scale-110 transition-transform z-10 shadow-lg">
-                    <Heart className="h-5 w-5 text-gray-800" />
-                  </button>
+                  <motion.button 
+                    whileTap={{ scale: 0.8 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleItem(product);
+                    }}
+                    className={cn(
+                      "absolute top-4 right-4 p-2 rounded-full z-10 shadow-lg transition-all",
+                      isLiked 
+                        ? "bg-red-50 text-red-500 opacity-100" 
+                        : "bg-white text-gray-800 hover:text-red-500 hover:scale-110"
+                    )}
+                  >
+                    <Heart className={cn("h-5 w-5", isLiked && "fill-current")} />
+                  </motion.button>
 
                   {/* Product Image */}
                   <div className="flex-1 flex items-center justify-center">
@@ -293,7 +310,10 @@ export default function Home() {
                     </div>
 
                     {/* Button */}
-                    <Button className="w-full bg-orange-500 text-white hover:bg-orange-600 rounded-full py-2 text-sm font-bold shadow-lg transition-all">
+                    <Button 
+                      onClick={() => addItem(product)}
+                      className="w-full bg-orange-500 text-white hover:bg-orange-600 rounded-full py-2 text-sm font-bold shadow-lg transition-all"
+                    >
                       Order Now
                     </Button>
                   </div>
