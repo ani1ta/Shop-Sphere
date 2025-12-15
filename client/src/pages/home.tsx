@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { WishlistDrawer } from "@/components/layout/WishlistDrawer";
+import { Footer } from "@/components/layout/Footer";
 import { ProductCard } from "@/components/ui/product-card";
 import { products, banners, categoryIcons } from "@/lib/products";
 import { Button } from "@/components/ui/button";
@@ -368,6 +369,8 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <Footer />
     </div>
   );
 }
