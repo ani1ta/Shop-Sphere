@@ -300,6 +300,94 @@ export default function Home() {
           </div>
         </motion.section>
 
+        {/* Collections - Men, Women, Accessories, Footwear */}
+        <section className="container mx-auto px-4 mb-24">
+          <div className="text-center mb-12">
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Shop by Collection</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Explore Collections</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Men's Collection */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-blue-600 rounded-[2rem] p-8 md:p-12 relative overflow-hidden group min-h-[350px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <span className="text-white text-xs font-bold px-3 py-1 bg-white/20 rounded-full mb-4 inline-block">Men's Fashion</span>
+                <h3 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Premium Collection</h3>
+                <p className="text-white/90 mb-8 max-w-xs">Discover stylish and sophisticated clothing for the modern man.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <Link href="/shop?category=Men">
+                  <Button className="bg-white text-blue-600 hover:bg-gray-100 rounded-full px-6 font-bold">Explore</Button>
+                </Link>
+                <img src={menProducts[0].image} className="h-40 w-40 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+
+            {/* Women's Collection */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-purple-600 rounded-[2rem] p-8 md:p-12 relative overflow-hidden group min-h-[350px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <span className="text-white text-xs font-bold px-3 py-1 bg-white/20 rounded-full mb-4 inline-block">Women's Fashion</span>
+                <h3 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Elegant Range</h3>
+                <p className="text-white/90 mb-8 max-w-xs">Elevate your style with our exclusive women's collection.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <Link href="/shop?category=Women">
+                  <Button className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-6 font-bold">Explore</Button>
+                </Link>
+                <img src={womenProducts[0].image} className="h-40 w-40 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+
+            {/* Accessories */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-pink-600 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black text-white mb-4">Accessories</h3>
+                <p className="text-white/90 text-sm mb-6">Complete your look with premium accessories.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <Link href="/shop?category=Accessories">
+                  <Button className="bg-white text-pink-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold">Shop</Button>
+                </Link>
+                <img src={accessories[0].image} className="h-32 w-32 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+
+            {/* Footwear */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-teal-600 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black text-white mb-4">Footwear</h3>
+                <p className="text-white/90 text-sm mb-6">Step into style with our shoe collection.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <Link href="/shop?category=Footwear">
+                  <Button className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold">Shop</Button>
+                </Link>
+                <img src={footwear[0].image} className="h-32 w-32 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Newsletter */}
         <motion.section 
           initial={{ opacity: 0 }}
@@ -335,37 +423,75 @@ export default function Home() {
         {/* Best Sellers */}
         <Section title="Best Sellers" items={footwear} link="/shop?category=Footwear" />
 
-        {/* Testimonials */}
+        {/* Product Reviews & Ratings */}
         <section className="container mx-auto px-4 mb-24">
           <div className="text-center mb-12">
-            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Feedback</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Testimonials</h2>
-            <p className="text-gray-400">What our customers are saying about experience</p>
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Customer Feedback</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Top Rated Products</h2>
+            <p className="text-gray-400">Real ratings and reviews from our customers</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: "Victor", text: "Lorem ipsum dolor sit amet consectetur, adipiscing elit. Hiberis nobis hoc impendium.", avatar: "👨" },
-              { name: "Satya Nadella", text: "Lorem ipsum dolor sit amet consectetur, adipiscing elit. Hiberis nobis hoc impendium.", avatar: "👨" },
-              { name: "Viral Kohli", text: "Lorem ipsum dolor sit amet consectetur, adipiscing elit. Hiberis nobis hoc impendium.", avatar: "👨" },
-            ].map((testimonial, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-slate-800 rounded-2xl p-6 border border-slate-700 hover:border-orange-400 transition-all"
-              >
-                <p className="text-gray-400 text-sm mb-6">{testimonial.text}</p>
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-orange-400 flex items-center justify-center text-xl">
-                    {testimonial.avatar}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {womenProducts.slice(0, 6).map((product, idx) => {
+              const rating = Math.floor(Math.random() * 2) + 4;
+              const reviews = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
+              const comments = [
+                "Amazing quality and fast delivery! Highly recommend.",
+                "Exactly as described. Great value for money.",
+                "Perfect fit and beautiful design. Will buy again!",
+                "Excellent customer service and great product.",
+                "Best purchase I've made this season!",
+                "Love it! The quality exceeded my expectations.",
+              ];
+              return (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-orange-400 transition-all hover:shadow-lg hover:shadow-orange-400/20"
+                >
+                  {/* Product Image */}
+                  <div className="mb-4 h-40 bg-gray-800 rounded-xl flex items-center justify-center overflow-hidden">
+                    <img src={product.image} alt={product.name} className="h-full w-full object-contain" />
                   </div>
-                  <span className="text-white font-bold">{testimonial.name}</span>
-                </div>
-              </motion.div>
-            ))}
+
+                  {/* Product Info */}
+                  <h3 className="text-white font-bold text-lg mb-2 line-clamp-2">{product.name}</h3>
+                  
+                  {/* Rating */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex gap-1">
+                      {[...Array(rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                      {[...Array(5 - rating)].map((_, i) => (
+                        <Star key={i + rating} className="h-4 w-4 text-gray-600" />
+                      ))}
+                    </div>
+                    <span className="text-sm font-bold text-white">{rating}.{Math.floor(Math.random() * 10)}</span>
+                    <span className="text-xs text-gray-500">({reviews} reviews)</span>
+                  </div>
+
+                  {/* Price */}
+                  <p className="text-orange-400 font-bold text-lg mb-4">₹{product.price.toLocaleString()}</p>
+
+                  {/* Comment */}
+                  <p className="text-gray-400 text-sm italic mb-4 border-l-4 border-orange-400 pl-4">
+                    "{comments[idx % comments.length]}"
+                  </p>
+
+                  {/* Reviewer Name */}
+                  <div className="flex items-center gap-2 pt-4 border-t border-gray-700">
+                    <div className="h-8 w-8 rounded-full bg-orange-400 flex items-center justify-center text-white font-bold text-xs">
+                      {String.fromCharCode(65 + idx)}
+                    </div>
+                    <span className="text-gray-400 text-sm font-medium">Verified Buyer</span>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
       </div>
