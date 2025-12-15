@@ -185,48 +185,39 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Categories - Premium Grid Layout */}
-        <div className="w-full bg-gradient-to-b from-black via-gray-950 to-black py-16 mb-24">
+        {/* Categories - Clean Horizontal Layout */}
+        <div className="w-full bg-gradient-to-r from-gray-950 via-black to-gray-950 py-12 mb-24">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Shop by Category</h2>
-              <p className="text-gray-400 text-lg">Explore our curated collections</p>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="flex justify-center gap-4 overflow-x-auto no-scrollbar pb-4">
               {categoriesBar.map((cat, idx) => (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.08 }}
-                  whileHover={{ y: -8 }}
+                  transition={{ delay: idx * 0.06 }}
+                  whileHover={{ scale: 1.1, y: -4 }}
                   onClick={() => setSelectedCategory(cat.name)}
                   className={cn(
-                    "group cursor-pointer rounded-3xl overflow-hidden relative h-64 flex flex-col items-center justify-center transition-all duration-300",
-                    selectedCategory === cat.name ? "ring-2 ring-orange-400 shadow-2xl shadow-orange-400/30" : ""
+                    "group flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all",
+                    selectedCategory === cat.name ? "opacity-100" : "opacity-80 hover:opacity-100"
                   )}
                 >
-                  {/* Background Gradient */}
-                  <div className={cn("absolute inset-0 opacity-90 group-hover:opacity-100 transition-opacity", cat.color)} />
-                  
-                  {/* Overlay blur effect */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                  
-                  {/* Content */}
-                  <div className="relative z-10 text-center flex flex-col items-center justify-center h-full gap-4 px-4">
-                    <div className="bg-white/20 backdrop-blur-sm p-4 rounded-2xl group-hover:bg-white/30 transition-all">
-                      <img src={cat.icon} className="h-12 w-12 object-contain filter brightness-0 invert" />
-                    </div>
-                    <span className="text-white font-bold text-lg leading-tight max-w-[140px]">
-                      {cat.name}
-                    </span>
-                    <div className="h-1 w-10 bg-white/60 rounded-full group-hover:w-14 transition-all duration-300" />
+                  <div className={cn(
+                    "h-24 w-24 rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl",
+                    cat.color
+                  )}>
+                    <img src={cat.icon} className="h-10 w-10 object-contain filter brightness-0 invert" />
                   </div>
-                  
-                  {/* Hover shadow */}
-                  <div className="absolute inset-0 rounded-3xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:shadow-current" />
+                  <span className="text-xs font-bold text-gray-300 group-hover:text-white transition-colors text-center max-w-[90px]">
+                    {cat.name}
+                  </span>
+                  {selectedCategory === cat.name && (
+                    <motion.div 
+                      layoutId="activeCategory"
+                      className="h-1 w-12 bg-orange-400 rounded-full"
+                    />
+                  )}
                 </motion.div>
               ))}
             </div>
