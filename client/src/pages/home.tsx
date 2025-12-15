@@ -85,30 +85,12 @@ const categoriesBar = [
 ];
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Men");
   
   const menProducts = products.filter(p => p.category === "Men").slice(0, 10);
   const womenProducts = products.filter(p => p.category === "Women").slice(0, 10);
   const footwear = products.filter(p => p.category === "Footwear").slice(0, 10);
   const accessories = products.filter(p => p.category === "Accessories").slice(0, 10);
-  
-  const getCategoryColor = (category: string) => {
-    const colorMap: Record<string, [string, string]> = {
-      "Men": ["bg-blue-600", "text-blue-600"],
-      "Women": ["bg-purple-600", "text-purple-600"],
-      "Accessories": ["bg-pink-600", "text-pink-600"],
-      "Footwear": ["bg-teal-600", "text-teal-600"],
-    };
-    return colorMap[category] || ["bg-blue-600", "text-blue-600"];
-  };
-  
-  const getDisplayedCategory = () => {
-    if (selectedCategory === "Men") return menProducts;
-    if (selectedCategory === "Women") return womenProducts;
-    if (selectedCategory === "Accessories") return accessories;
-    if (selectedCategory === "Footwear") return footwear;
-    return menProducts; // Default
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-gray-900 to-black pb-20 overflow-x-hidden">
@@ -361,81 +343,92 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* Collections - Dynamic Based on Selected Category */}
+        {/* Collections - Men, Women, Accessories, Footwear */}
         <section className="container mx-auto px-4 mb-24 pt-16">
           <div className="text-center mb-12">
             <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Shop by Collection</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">
-              {selectedCategory === "Men" && "Men's Collection"}
-              {selectedCategory === "Women" && "Women's Collection"}
-              {selectedCategory === "Accessories" && "Accessories Collection"}
-              {selectedCategory === "Footwear" && "Footwear Collection"}
-            </h2>
-            <p className="text-gray-400">Selected Category: <span className="text-orange-400 font-bold">{selectedCategory}</span></p>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Explore Collections</h2>
           </div>
 
-          <motion.div
-            key={selectedCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className={cn(
-              "rounded-3xl p-8 md:p-16 relative overflow-hidden group min-h-[450px] flex flex-col justify-between",
-              getCategoryColor(selectedCategory)[0]
-            )}
-          >
-            {/* Decorative Background */}
-            <div className="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
-
-            <div className="relative z-10">
-              <span className="text-white text-sm font-bold px-4 py-2 bg-white/20 rounded-full mb-6 inline-block">
-                {selectedCategory === "Men" && "👔 Men's Fashion"}
-                {selectedCategory === "Women" && "👗 Women's Fashion"}
-                {selectedCategory === "Accessories" && "✨ Accessories"}
-                {selectedCategory === "Footwear" && "👟 Footwear"}
-              </span>
-              <h3 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
-                {selectedCategory === "Men" && "Premium Menswear"}
-                {selectedCategory === "Women" && "Elegant Womenswear"}
-                {selectedCategory === "Accessories" && "Perfect Accessories"}
-                {selectedCategory === "Footwear" && "Step into Style"}
-              </h3>
-              <p className="text-white/90 text-lg mb-8 max-w-2xl">
-                {selectedCategory === "Men" && "Discover stylish and sophisticated clothing for the modern man. Premium quality, contemporary designs."}
-                {selectedCategory === "Women" && "Elevate your style with our exclusive women's collection. Elegant, trendy, and empowering fashion."}
-                {selectedCategory === "Accessories" && "Complete your look with our premium accessories collection. From bags to jewelry, find the perfect finishing touch."}
-                {selectedCategory === "Footwear" && "Step into style with our curated shoe collection. Comfort meets fashion in every pair."}
-              </p>
-              
-              {/* Products Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {getDisplayedCategory().slice(0, 4).map((product, idx) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center hover:bg-white/20 transition-all"
-                  >
-                    <img src={product.image} className="h-24 w-24 object-contain mx-auto mb-2" />
-                    <p className="text-white text-xs font-bold line-clamp-1">{product.name}</p>
-                    <p className="text-white/80 text-sm font-bold">₹{product.price}</p>
-                  </motion.div>
-                ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Men's Collection */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-blue-600 rounded-[2rem] p-8 md:p-12 relative overflow-hidden group min-h-[350px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <span className="text-white text-xs font-bold px-3 py-1 bg-white/20 rounded-full mb-4 inline-block">Men's Fashion</span>
+                <h3 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Premium Collection</h3>
+                <p className="text-white/90 mb-8 max-w-xs">Discover stylish and sophisticated clothing for the modern man.</p>
               </div>
-            </div>
+              <div className="flex items-end justify-between relative z-10">
+                <button onClick={() => window.location.href = '/shop?category=Men'} className="bg-white text-blue-600 hover:bg-gray-100 rounded-full px-6 py-2 font-bold transition-all hover:scale-105">
+                  Explore
+                </button>
+                <img src={menProducts[0].image} className="h-40 w-40 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
 
-            <div className="flex items-end justify-between relative z-10">
-              <Button onClick={() => window.location.href = `/shop?category=${selectedCategory}`} className={cn(
-                "rounded-full px-8 py-3 font-bold transition-all hover:scale-110 text-lg",
-                getCategoryColor(selectedCategory)[1] + " bg-white hover:bg-gray-100"
-              )}>
-                Explore All
-              </Button>
-              <img src={getDisplayedCategory()[0]?.image || menProducts[0].image} className="h-48 w-48 object-contain group-hover:scale-110 transition-transform" />
-            </div>
-          </motion.div>
+            {/* Women's Collection */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-purple-600 rounded-[2rem] p-8 md:p-12 relative overflow-hidden group min-h-[350px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <span className="text-white text-xs font-bold px-3 py-1 bg-white/20 rounded-full mb-4 inline-block">Women's Fashion</span>
+                <h3 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Elegant Range</h3>
+                <p className="text-white/90 mb-8 max-w-xs">Elevate your style with our exclusive women's collection.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <button onClick={() => window.location.href = '/shop?category=Women'} className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-6 py-2 font-bold transition-all hover:scale-105">
+                  Explore
+                </button>
+                <img src={womenProducts[0].image} className="h-40 w-40 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+
+            {/* Accessories */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-pink-600 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black text-white mb-4">Accessories</h3>
+                <p className="text-white/90 text-sm mb-6">Complete your look with premium accessories.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <button onClick={() => window.location.href = '/shop?category=Accessories'} className="bg-white text-pink-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold transition-all hover:scale-105">
+                  Shop
+                </button>
+                <img src={accessories[0].image} className="h-32 w-32 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+
+            {/* Footwear */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-teal-600 rounded-[2rem] p-8 relative overflow-hidden group min-h-[300px] flex flex-col justify-between"
+            >
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black text-white mb-4">Footwear</h3>
+                <p className="text-white/90 text-sm mb-6">Step into style with our shoe collection.</p>
+              </div>
+              <div className="flex items-end justify-between relative z-10">
+                <button onClick={() => window.location.href = '/shop?category=Footwear'} className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold transition-all hover:scale-105">
+                  Shop
+                </button>
+                <img src={footwear[0].image} className="h-32 w-32 object-contain group-hover:scale-110 transition-transform" />
+              </div>
+            </motion.div>
+          </div>
         </section>
 
         {/* Newsletter */}
