@@ -104,7 +104,7 @@ export default function Shop() {
       <Navbar />
       <CartDrawer />
       
-      <div className="pt-28 pb-20 container mx-auto px-6">
+      <div className="pt-6 pb-20 container mx-auto px-6">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -123,7 +123,7 @@ export default function Shop() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 sticky top-24 z-30 bg-gradient-to-r from-gray-950 via-black to-gray-950 backdrop-blur-xl py-4 px-6 rounded-2xl border border-gray-800"
+          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 sticky top-20 z-30 bg-gradient-to-r from-gray-950 via-black to-gray-950 backdrop-blur-xl py-4 px-6 rounded-2xl border border-gray-800"
         >
           
           {/* Mobile Filter Sheet */}
