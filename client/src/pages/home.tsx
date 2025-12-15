@@ -211,7 +211,7 @@ export default function Home() {
         </div>
 
         {/* Best Products */}
-        <section className="container mx-auto px-4 mb-24">
+        <section className="container mx-auto px-4 mb-24 mt-20">
           <div className="text-center mb-12">
             <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Top Selling</span>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Premium Products</h2>
