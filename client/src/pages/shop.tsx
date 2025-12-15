@@ -97,7 +97,7 @@ export default function Shop() {
       <Navbar />
       <CartDrawer />
       
-      <div className="pt-8 pb-20">
+      <div className="pt-2 pb-20">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
