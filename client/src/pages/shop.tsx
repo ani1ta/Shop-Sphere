@@ -36,7 +36,6 @@ export default function Shop() {
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = useState([0, 3000]);
 
-  // Sync state with URL query params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const category = params.get("category");
@@ -45,7 +44,7 @@ export default function Shop() {
     } else {
       setActiveFilter("All");
     }
-    setCurrentPage(1); // Reset page on filter change
+    setCurrentPage(1);
   }, [location]);
 
   const handleFilterChange = (filter: string) => {
@@ -55,16 +54,13 @@ export default function Shop() {
     setCurrentPage(1);
   };
 
-  // Filter and Sort Logic
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // Category Filter
     if (activeFilter !== "All") {
       result = result.filter(p => p.category === activeFilter);
     }
 
-    // Search Filter
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter(p => 
@@ -73,10 +69,8 @@ export default function Shop() {
       );
     }
 
-    // Price Filter
     result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
 
-    // Sorting
     if (sortOrder === "price-asc") {
       result = [...result].sort((a, b) => a.price - b.price);
     } else if (sortOrder === "price-desc") {
@@ -88,7 +82,6 @@ export default function Shop() {
     return result;
   }, [activeFilter, sortOrder, searchQuery, priceRange]);
 
-  // Pagination Logic
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -104,164 +97,175 @@ export default function Shop() {
       <Navbar />
       <CartDrawer />
       
-      <div className="pt-6 pb-20 container mx-auto px-6">
-        {/* Header */}
+      <div className="pt-8 pb-20">
+        {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center text-center mb-16"
+          className="container mx-auto px-6 mb-12"
         >
-          <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-4">Collection</span>
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-4">Premium Products</h1>
-          <p className="text-gray-400 max-w-2xl text-lg">
-            Explore our curated collection of {products.length} premium items
-          </p>
+          <div className="text-center">
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-3">Collection</span>
+            <h1 className="text-5xl md:text-6xl font-black text-white mb-3">Shop All Products</h1>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Discover {products.length} premium items curated for you
+            </p>
+          </div>
         </motion.div>
 
-        {/* Controls Bar */}
+        {/* Filters & Controls */}
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 sticky top-20 z-30 bg-gradient-to-r from-gray-950 via-black to-gray-950 backdrop-blur-xl py-4 px-6 rounded-2xl border border-gray-800"
+          className="container mx-auto px-6 mb-10"
         >
-          
-          {/* Mobile Filter Sheet */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button className="md:hidden w-full flex gap-2 bg-orange-400 text-black hover:bg-orange-500 font-bold">
-                <SlidersHorizontal className="h-4 w-4" /> Filters & Sort
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="bg-gray-950 border-gray-800">
-              <SheetHeader>
-                <SheetTitle className="text-white text-2xl font-black">Filters</SheetTitle>
-              </SheetHeader>
-              <div className="mt-8 space-y-8">
-                <div className="space-y-4">
-                  <h3 className="text-white font-bold">Category</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {filters.map((filter) => (
-                      <button
-                        key={filter}
-                        onClick={() => handleFilterChange(filter)}
-                        className={cn(
-                          "px-4 py-2 text-xs uppercase tracking-widest border rounded-lg transition-all font-bold",
-                          activeFilter === filter
-                            ? "bg-orange-400 text-black border-orange-400"
-                            : "border-gray-700 text-gray-400 hover:text-orange-400"
-                        )}
-                      >
-                        {filter}
-                      </button>
-                    ))}
+          <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 border border-gray-800 rounded-xl p-6">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+              {/* Mobile Filter */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button className="md:hidden w-full bg-orange-400 text-black hover:bg-orange-500 font-bold rounded-lg">
+                    <SlidersHorizontal className="h-4 w-4 mr-2" /> Filters
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="bg-gray-950 border-gray-800">
+                  <SheetHeader>
+                    <SheetTitle className="text-white text-xl font-black">Filters & Sort</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-8 space-y-8">
+                    <div>
+                      <h3 className="text-white font-bold mb-3">Category</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {filters.map((filter) => (
+                          <button
+                            key={filter}
+                            onClick={() => handleFilterChange(filter)}
+                            className={cn(
+                              "px-3 py-2 text-xs uppercase tracking-widest rounded-lg border font-bold transition-all",
+                              activeFilter === filter
+                                ? "bg-orange-400 text-black border-orange-400"
+                                : "border-gray-700 text-gray-400 hover:border-orange-400"
+                            )}
+                          >
+                            {filter}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-white font-bold mb-3">Price: ₹{priceRange[0]} - ₹{priceRange[1]}</h3>
+                      <Slider
+                        defaultValue={[0, 3000]}
+                        max={3000}
+                        step={50}
+                        value={priceRange}
+                        onValueChange={setPriceRange}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-white font-bold">Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}</h3>
-                  <Slider
-                    defaultValue={[0, 3000]}
-                    max={3000}
-                    step={50}
-                    value={priceRange}
-                    onValueChange={setPriceRange}
+                </SheetContent>
+              </Sheet>
+
+              {/* Desktop Categories */}
+              <div className="hidden md:flex md:col-span-5 gap-2 flex-wrap items-center">
+                {filters.map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => handleFilterChange(filter)}
+                    className={cn(
+                      "px-4 py-2 text-xs uppercase tracking-widest rounded-lg border font-bold transition-all whitespace-nowrap",
+                      activeFilter === filter
+                        ? "bg-orange-400 text-black border-orange-400"
+                        : "border-gray-700 text-gray-400 hover:border-orange-400"
+                    )}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+
+              {/* Search */}
+              <div className="md:col-span-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                  <Input 
+                    placeholder="Search..." 
+                    className="pl-9 bg-gray-800 border-gray-700 text-white placeholder-gray-500 rounded-lg focus-visible:border-orange-400 focus-visible:ring-orange-400"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
               </div>
-            </SheetContent>
-          </Sheet>
 
-          {/* Categories (Desktop) */}
-          <div className="hidden md:flex gap-2 overflow-x-auto pb-0 no-scrollbar">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => handleFilterChange(filter)}
-                className={cn(
-                  "px-5 py-2 text-xs uppercase tracking-widest transition-all border rounded-lg font-bold whitespace-nowrap",
-                  activeFilter === filter
-                    ? "bg-orange-400 text-black border-orange-400"
-                    : "border-gray-700 text-gray-400 hover:text-white hover:border-orange-400"
-                )}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            {/* Search */}
-            <div className="relative w-full md:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <Input 
-                placeholder="Search products..." 
-                className="pl-9 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus-visible:border-orange-400 focus-visible:ring-orange-400 rounded-lg"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+              {/* Sort */}
+              <div className="md:col-span-3">
+                <Select value={sortOrder} onValueChange={setSortOrder}>
+                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white rounded-lg">
+                    <SelectValue placeholder="Sort" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-900 border-gray-800">
+                    <SelectItem value="featured">Featured</SelectItem>
+                    <SelectItem value="newest">Newest</SelectItem>
+                    <SelectItem value="price-asc">Low to High</SelectItem>
+                    <SelectItem value="price-desc">High to Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-
-            {/* Sort */}
-            <Select value={sortOrder} onValueChange={setSortOrder}>
-              <SelectTrigger className="w-full md:w-[180px] bg-gray-800 border-gray-700 text-white rounded-lg">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-900 border-gray-800">
-                <SelectItem value="featured" className="text-white">Featured</SelectItem>
-                <SelectItem value="newest" className="text-white">Newest Arrivals</SelectItem>
-                <SelectItem value="price-asc" className="text-white">Price: Low to High</SelectItem>
-                <SelectItem value="price-desc" className="text-white">Price: High to Low</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </motion.div>
 
-        {/* Products Count */}
-        <div className="mb-6 text-sm text-gray-400 font-medium">
-          Showing <span className="text-orange-400 font-bold">{paginatedProducts.length}</span> of <span className="text-orange-400 font-bold">{filteredProducts.length}</span> products
+        {/* Results Count */}
+        <div className="container mx-auto px-6 mb-6">
+          <p className="text-gray-400 text-sm">
+            Showing <span className="text-orange-400 font-bold">{paginatedProducts.length}</span> of <span className="text-orange-400 font-bold">{filteredProducts.length}</span> products
+          </p>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[500px] mb-12">
-          {paginatedProducts.map((product, idx) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
+        <div className="container mx-auto px-6 mb-16">
+          {filteredProducts.length === 0 ? (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
             >
-              <ProductCard product={product} />
+              <p className="text-gray-400 text-lg mb-6">No products found</p>
+              <Button 
+                onClick={() => {
+                  setSearchQuery("");
+                  setPriceRange([0, 3000]);
+                  setActiveFilter("All");
+                }}
+                className="bg-orange-400 text-black hover:bg-orange-500 font-bold rounded-lg"
+              >
+                Clear Filters
+              </Button>
             </motion.div>
-          ))}
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {paginatedProducts.map((product, idx) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  viewport={{ once: true }}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* Empty State */}
-        {filteredProducts.length === 0 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
-          >
-            <p className="text-lg text-gray-400 mb-6">No products match your criteria.</p>
-            <Button 
-              onClick={() => {
-                setSearchQuery("");
-                setPriceRange([0, 3000]);
-                setActiveFilter("All");
-              }}
-              className="bg-orange-400 text-black hover:bg-orange-500 font-bold rounded-full px-8"
-            >
-              Clear all filters
-            </Button>
-          </motion.div>
-        )}
 
         {/* Pagination */}
         {totalPages > 1 && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex justify-center items-center gap-6 mt-16"
+            className="container mx-auto px-6 flex justify-center items-center gap-4"
           >
             <Button
               onClick={() => {
@@ -270,16 +274,16 @@ export default function Shop() {
               }}
               disabled={currentPage === 1}
               className={cn(
-                "rounded-full p-3 border transition-all",
+                "rounded-lg px-4 py-2 border font-bold transition-all",
                 currentPage === 1 
-                  ? "border-gray-700 text-gray-600 cursor-not-allowed" 
-                  : "border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black"
+                  ? "border-gray-700 text-gray-600 bg-transparent cursor-not-allowed" 
+                  : "border-orange-400 text-orange-400 bg-transparent hover:bg-orange-400 hover:text-black"
               )}
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-4 w-4" />
             </Button>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
@@ -288,7 +292,7 @@ export default function Shop() {
                     scrollToTop();
                   }}
                   className={cn(
-                    "h-10 w-10 rounded-full font-bold transition-all",
+                    "h-9 w-9 rounded-lg font-bold transition-all text-sm",
                     currentPage === page
                       ? "bg-orange-400 text-black"
                       : "border border-gray-700 text-gray-400 hover:border-orange-400 hover:text-orange-400"
@@ -306,13 +310,13 @@ export default function Shop() {
               }}
               disabled={currentPage === totalPages}
               className={cn(
-                "rounded-full p-3 border transition-all",
+                "rounded-lg px-4 py-2 border font-bold transition-all",
                 currentPage === totalPages 
-                  ? "border-gray-700 text-gray-600 cursor-not-allowed" 
-                  : "border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black"
+                  ? "border-gray-700 text-gray-600 bg-transparent cursor-not-allowed" 
+                  : "border-orange-400 text-orange-400 bg-transparent hover:bg-orange-400 hover:text-black"
               )}
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </motion.div>
         )}
