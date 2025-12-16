@@ -49,8 +49,8 @@ export function Navbar() {
             <SheetContent side="left" className="bg-gray-950 border-r border-gray-800">
               <div className="flex flex-col gap-8 mt-8">
                 <Link href="/" className="flex items-center gap-2">
-                  <div className="h-8 w-8 bg-gradient-to-br from-orange-400 to-orange-500 rounded-lg flex items-center justify-center font-black text-black text-sm">
-                    P
+                  <div className="h-8 w-8 bg-yellow-400 rounded-lg flex items-center justify-center font-black text-black text-sm hover:bg-yellow-500 transition-all">
+                    ✦
                   </div>
                   <span className="text-2xl font-black text-white tracking-tighter">PRISMA</span>
                 </Link>
@@ -69,8 +69,8 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group">
           <div className="flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
-            <div className="h-8 w-8 bg-gradient-to-br from-orange-400 to-orange-500 rounded-lg flex items-center justify-center font-black text-black text-base group-hover:brightness-110 transition-all">
-              P
+            <div className="h-8 w-8 bg-yellow-400 rounded-lg flex items-center justify-center font-black text-black text-base group-hover:bg-yellow-500 transition-all">
+              ✦
             </div>
             <span className="text-2xl font-black text-white tracking-tighter">PRISMA</span>
           </div>

@@ -44,8 +44,8 @@ export function Footer() {
           >
             <Link href="/">
               <div className="flex items-center gap-2 mb-4 cursor-pointer group">
-                <div className="h-10 w-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-lg flex items-center justify-center font-black text-black text-lg group-hover:brightness-110 transition-all">
-                  P
+                <div className="h-10 w-10 bg-yellow-400 rounded-lg flex items-center justify-center font-black text-black text-lg group-hover:bg-yellow-500 transition-all">
+                  ✦
                 </div>
                 <span className="font-black text-xl text-white">PRISMA</span>
               </div>
