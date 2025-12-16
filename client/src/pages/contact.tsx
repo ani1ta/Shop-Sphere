@@ -45,7 +45,7 @@ export default function Contact() {
             {[
               { icon: Mail, label: "Email", value: "hello@prisma.com", color: "bg-blue-500" },
               { icon: Phone, label: "Phone", value: "+91 123456789", color: "bg-orange-500" },
-              { icon: MapPin, label: "Address", value: "Goods, Uttar Pradesh", color: "bg-purple-500" },
+              { icon: MapPin, label: "Address", value: "Mumbai, India", color: "bg-purple-500" },
               { icon: Clock, label: "Support Hours", value: "24/7 Available", color: "bg-green-500" },
             ].map((contact, idx) => {
               const Icon = contact.icon;
@@ -149,7 +149,7 @@ export default function Contact() {
                 <div className="text-center">
                   <MapPin className="h-12 w-12 text-orange-400 mx-auto mb-4" />
                   <p className="text-gray-400">PRISMA Headquarters</p>
-                  <p className="text-white font-bold mt-2">Goods, Uttar Pradesh, India</p>
+                  <p className="text-white font-bold mt-2">Mumbai, India</p>
                 </div>
               </div>
 

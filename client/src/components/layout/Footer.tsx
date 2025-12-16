@@ -51,13 +51,13 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-              Lorem ipsum dolor sit amet adipiscing elit. Cum in textktur consectetur et nostissibae hibens.
+              PRISMA is your ultimate destination for premium fashion. Discover curated collections of clothing, footwear, and accessories that elevate your personal style.
             </p>
 
             {/* Address */}
             <div className="flex items-start gap-2 mt-6">
               <MapPin className="h-4 w-4 text-orange-400 mt-1 flex-shrink-0" />
-              <p className="text-gray-400 text-sm">Goods, Uttar Pradesh</p>
+              <p className="text-gray-400 text-sm">Mumbai, India</p>
             </div>
 
             {/* Phone */}
