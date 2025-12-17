@@ -49,11 +49,9 @@ export function Navbar() {
             <SheetContent side="left" className="bg-gray-950 border-r border-gray-800">
               <div className="flex flex-col gap-6 sm:gap-8 mt-6 sm:mt-8">
                 <Link href="/" className="flex items-center gap-2">
-                  <img 
-                    src="/favicon.png" 
-                    alt="PRISMA" 
-                    className="h-6 sm:h-8 w-6 sm:w-8 rounded-lg object-contain"
-                  />
+                  <div className="h-6 sm:h-8 w-6 sm:w-8 rounded-lg bg-orange-400 flex items-center justify-center font-black text-black text-xs sm:text-sm group-hover:bg-orange-500 transition-colors">
+                    ✦
+                  </div>
                   <span className="text-lg sm:text-2xl font-black text-white tracking-tighter">PRISMA</span>
                 </Link>
                 <div className="flex flex-col gap-4 sm:gap-6 text-sm sm:text-lg font-bold text-gray-300">
@@ -71,11 +69,9 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group">
           <div className="flex items-center gap-1 sm:gap-2 transition-transform duration-300 group-hover:scale-105">
-            <img 
-              src="/favicon.png" 
-              alt="PRISMA" 
-              className="h-6 sm:h-8 w-6 sm:w-8 rounded-lg object-contain group-hover:brightness-110 transition-all"
-            />
+            <div className="h-6 sm:h-8 w-6 sm:w-8 rounded-lg bg-orange-400 flex items-center justify-center font-black text-black text-xs sm:text-sm group-hover:bg-orange-500 transition-colors">
+              ✦
+            </div>
             <span className="text-lg sm:text-2xl font-black text-white tracking-tighter">PRISMA</span>
           </div>
         </Link>
