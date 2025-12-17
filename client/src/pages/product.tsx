@@ -55,12 +55,12 @@ export default function ProductPage() {
       <WishlistDrawer />
       <CartDrawer />
       
-      <div className="container mx-auto px-4 pt-24 md:pt-28">
-        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black border border-gray-800 rounded-3xl overflow-hidden">
+      <div className="container mx-auto px-4 pt-20 md:pt-24 lg:pt-28">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black border border-gray-800 rounded-2xl md:rounded-3xl overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
             
             {/* Left Column: Images (Sticky) */}
-            <div className="md:col-span-5 p-8 border-b md:border-b-0 md:border-r border-gray-800 relative bg-gradient-to-b from-gray-900/50 to-black/50">
+            <div className="md:col-span-5 p-4 sm:p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-800 relative bg-gradient-to-b from-gray-900/50 to-black/50">
               <div className="absolute top-8 right-8 z-10 flex flex-col gap-3">
                 <motion.button 
                   whileTap={{ scale: 0.8 }}
@@ -123,39 +123,39 @@ export default function ProductPage() {
               <motion.h1 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 md:mb-6 leading-tight"
               >
                 {product.name}
               </motion.h1>
 
-              <div className="flex items-center gap-4 mb-8 flex-wrap">
+              <div className="flex items-center gap-2 sm:gap-4 mb-6 md:mb-8 flex-wrap">
                 <div className="flex items-center gap-2 bg-orange-500/20 text-orange-400 px-4 py-2 rounded-full text-sm font-bold border border-orange-500/30">
                   {rating} <Star className="h-4 w-4 fill-current" />
                 </div>
                 <span className="text-gray-400 text-sm font-medium">{reviewCount.toLocaleString()} Verified Ratings</span>
               </div>
 
-              <div className="flex items-baseline gap-4 mb-10">
-                <span className="text-5xl md:text-6xl font-black text-white">₹{product.price.toLocaleString()}</span>
-                <span className="text-2xl text-gray-600 line-through font-medium">₹{originalPrice.toLocaleString()}</span>
-                <span className="text-lg font-bold text-orange-400 bg-orange-500/20 px-4 py-2 rounded-lg border border-orange-500/30">{discount}% off</span>
+              <div className="flex items-baseline gap-2 sm:gap-4 mb-8 md:mb-10 flex-wrap">
+                <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white">₹{product.price.toLocaleString()}</span>
+                <span className="text-lg sm:text-xl md:text-2xl text-gray-600 line-through font-medium">₹{originalPrice.toLocaleString()}</span>
+                <span className="text-xs sm:text-sm md:text-lg font-bold text-orange-400 bg-orange-500/20 px-3 py-1 sm:px-4 sm:py-2 rounded-lg border border-orange-500/30">{discount}% off</span>
               </div>
 
               {/* Size Selection */}
               {(product.category === "Men" || product.category === "Women" || product.category === "Footwear") && (
-                <div className="mb-10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-base font-bold text-white">Select Size</span>
-                    <span className="text-sm font-bold text-orange-400 cursor-pointer hover:underline">Size Chart</span>
+                <div className="mb-8 md:mb-10">
+                  <div className="flex items-center gap-2 sm:gap-4 mb-3 md:mb-4">
+                    <span className="text-sm md:text-base font-bold text-white">Select Size</span>
+                    <span className="text-xs md:text-sm font-bold text-orange-400 cursor-pointer hover:underline">Size Chart</span>
                   </div>
-                  <div className="flex gap-3 flex-wrap">
+                  <div className="flex gap-2 sm:gap-3 flex-wrap">
                     {sizes.map(size => (
                       <motion.button
                         key={size}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setSelectedSize(size)}
                         className={cn(
-                          "h-12 w-12 rounded-xl border-2 text-base font-bold flex items-center justify-center transition-all",
+                          "h-9 sm:h-10 md:h-12 w-9 sm:w-10 md:w-12 rounded-lg md:rounded-xl border-2 text-xs sm:text-sm md:text-base font-bold flex items-center justify-center transition-all",
                           selectedSize === size 
                             ? "border-orange-400 text-orange-400 bg-orange-500/20 shadow-lg shadow-orange-500/20" 
                             : "border-gray-700 text-gray-400 hover:border-orange-400 hover:text-orange-400 hover:bg-gray-800"

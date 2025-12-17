@@ -36,27 +36,27 @@ export function Navbar() {
         ? "bg-gray-950/95 backdrop-blur-xl border-b border-gray-800 h-20 shadow-lg" 
         : "bg-gradient-to-b from-black to-transparent h-24"
     )}>
-      <div className="container mx-auto px-6 h-full flex items-center gap-6">
+      <div className="container mx-auto px-4 sm:px-6 h-full flex items-center gap-3 sm:gap-6">
         
         {/* Mobile Menu */}
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="text-white hover:bg-gray-800">
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 sm:h-6 w-5 sm:w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="bg-gray-950 border-r border-gray-800">
-              <div className="flex flex-col gap-8 mt-8">
+              <div className="flex flex-col gap-6 sm:gap-8 mt-6 sm:mt-8">
                 <Link href="/" className="flex items-center gap-2">
                   <img 
                     src="/favicon.png" 
                     alt="PRISMA" 
-                    className="h-8 w-8 rounded-lg object-contain"
+                    className="h-6 sm:h-8 w-6 sm:w-8 rounded-lg object-contain"
                   />
-                  <span className="text-2xl font-black text-white tracking-tighter">PRISMA</span>
+                  <span className="text-lg sm:text-2xl font-black text-white tracking-tighter">PRISMA</span>
                 </Link>
-                <div className="flex flex-col gap-6 text-lg font-bold text-gray-300">
+                <div className="flex flex-col gap-4 sm:gap-6 text-sm sm:text-lg font-bold text-gray-300">
                   <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
                   <Link href="/about" className="hover:text-orange-400 transition-colors">About</Link>
                   <Link href="/contact" className="hover:text-orange-400 transition-colors">Contact</Link>
@@ -70,13 +70,13 @@ export function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group">
-          <div className="flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
+          <div className="flex items-center gap-1 sm:gap-2 transition-transform duration-300 group-hover:scale-105">
             <img 
               src="/favicon.png" 
               alt="PRISMA" 
-              className="h-8 w-8 rounded-lg object-contain group-hover:brightness-110 transition-all"
+              className="h-6 sm:h-8 w-6 sm:w-8 rounded-lg object-contain group-hover:brightness-110 transition-all"
             />
-            <span className="text-2xl font-black text-white tracking-tighter">PRISMA</span>
+            <span className="text-lg sm:text-2xl font-black text-white tracking-tighter">PRISMA</span>
           </div>
         </Link>
 
@@ -130,12 +130,12 @@ export function Navbar() {
 
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="flex items-center gap-3 bg-orange-400 text-black px-6 py-3 rounded-full hover:bg-orange-500 transition-all shadow-lg hover:shadow-orange-500/30 active:scale-95 ml-2 group font-bold"
+            className="flex items-center gap-2 sm:gap-3 bg-orange-400 text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-orange-500 transition-all shadow-lg hover:shadow-orange-500/30 active:scale-95 ml-1 sm:ml-2 group font-bold text-xs sm:text-sm"
           >
-            <ShoppingCart className="h-5 w-5 group-hover:animate-bounce" />
+            <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 group-hover:animate-bounce" />
             <span className="hidden sm:inline">Bag</span>
             {count > 0 && (
-              <span className="bg-black text-orange-400 text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
+              <span className="bg-black text-orange-400 text-[8px] sm:text-[10px] font-bold h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center rounded-full">
                 {count}
               </span>
             )}
