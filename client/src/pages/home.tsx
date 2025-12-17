@@ -102,24 +102,24 @@ export default function Home() {
       <CartDrawer />
       <WishlistDrawer />
 
-      <div className="pt-24 md:pt-28 pb-12">
+      <div className="pt-20 md:pt-24 lg:pt-28 pb-8 md:pb-12">
         
         {/* Marquee Section */}
-        <div className="w-full overflow-hidden bg-orange-400 text-black py-3 mb-8 shadow-lg">
-          <div className="animate-marquee whitespace-nowrap flex gap-16 items-center font-bold tracking-wider">
+        <div className="w-full overflow-hidden bg-orange-400 text-black py-2 md:py-3 mb-6 md:mb-8 shadow-lg">
+          <div className="animate-marquee whitespace-nowrap flex gap-8 md:gap-16 items-center font-bold tracking-wider">
             {[...Array(10)].map((_, i) => (
-              <div key={i} className="flex items-center gap-4 text-sm md:text-base">
-                <Sparkles className="h-5 w-5" />
+              <div key={i} className="flex items-center gap-2 md:gap-4 text-xs md:text-sm lg:text-base">
+                <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
                 <span>70% OFF ON ALL PRODUCTS</span>
-                <Sparkles className="h-5 w-5" />
+                <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
               </div>
             ))}
           </div>
         </div>
 
         {/* Hero Section - Bold & Geometric */}
-        <div className="container mx-auto px-4 mb-24">
-          <div className="relative h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden">
+        <div className="container mx-auto px-4 mb-16 md:mb-24">
+          <div className="relative h-[350px] sm:h-[450px] md:h-[550px] lg:h-[600px] rounded-2xl md:rounded-[2.5rem] overflow-hidden">
             {/* Diagonal Geometric Shape */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-orange-400 via-amber-400 to-orange-500 clip-path-polygon transform -skew-x-12 z-0"></div>
             
@@ -127,7 +127,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-black z-0"></div>
 
             {/* Content */}
-            <div className="relative z-10 h-full flex items-center px-8 md:px-16">
+            <div className="relative z-10 h-full flex items-center px-4 sm:px-8 md:px-12 lg:px-16">
               <motion.div 
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -138,7 +138,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-4"
+                  className="text-orange-400 font-bold tracking-widest uppercase text-xs md:text-sm block mb-2 md:mb-4"
                 >
                   Super Offer
                 </motion.span>
@@ -147,7 +147,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-6xl md:text-7xl font-black text-white mb-6 leading-none tracking-tighter"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-3 md:mb-6 leading-tight md:leading-none tracking-tighter"
                 >
                   70% off on<br/> All Products<br/> <span className="text-orange-400">Sale</span>
                 </motion.h1>
@@ -156,7 +156,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-gray-300 text-lg mb-8 max-w-xl leading-relaxed"
+                  className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg mb-4 md:mb-8 max-w-xl leading-relaxed"
                 >
                   Lorem nibh adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </motion.p>
@@ -192,9 +192,9 @@ export default function Home() {
         </div>
 
         {/* Categories - Clean Horizontal Layout */}
-        <div className="w-full bg-gradient-to-r from-gray-950 via-black to-gray-950 py-12 mb-24">
+        <div className="w-full bg-gradient-to-r from-gray-950 via-black to-gray-950 py-8 md:py-12 mb-16 md:mb-24">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center gap-4 overflow-x-auto no-scrollbar pb-4">
+            <div className="flex justify-center gap-2 md:gap-4 overflow-x-auto no-scrollbar pb-4">
               {categoriesBar.map((cat, idx) => (
                 <motion.div 
                   key={idx}
@@ -202,22 +202,22 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.06 }}
-                  whileHover={{ scale: 1.1, y: -4 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
                   onClick={() => setSelectedCategory(cat.name)}
                   className={cn(
-                    "group flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all",
+                    "group flex flex-col items-center gap-1 md:gap-2 cursor-pointer min-w-fit transition-all",
                     selectedCategory === cat.name ? "opacity-100" : "opacity-80 hover:opacity-100"
                   )}
                 >
                   <Link href="/shop">
                     <div className={cn(
-                      "h-24 w-24 rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl cursor-pointer",
+                      "h-16 md:h-24 w-16 md:w-24 rounded-lg md:rounded-2xl flex items-center justify-center transition-all shadow-lg group-hover:shadow-2xl cursor-pointer",
                       cat.color
                     )}>
-                      <img src={cat.icon} className="h-10 w-10 object-contain filter brightness-0 invert" />
+                      <img src={cat.icon} className="h-6 md:h-10 w-6 md:w-10 object-contain filter brightness-0 invert" />
                     </div>
                   </Link>
-                  <span className="text-xs font-bold text-gray-300 group-hover:text-white transition-colors text-center max-w-[90px]">
+                  <span className="text-[10px] md:text-xs font-bold text-gray-300 group-hover:text-white transition-colors text-center max-w-[70px] md:max-w-[90px]">
                     {cat.name}
                   </span>
                   {selectedCategory === cat.name && (
@@ -233,14 +233,14 @@ export default function Home() {
         </div>
 
         {/* Best Products */}
-        <section className="container mx-auto px-4 mb-24 mt-20">
-          <div className="text-center mb-12">
-            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-2">Top Selling</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">Premium Products</h2>
-            <p className="text-gray-400">Handpicked collection of trending fashion items loved by thousands of customers</p>
+        <section className="container mx-auto px-4 mb-16 md:mb-24 mt-12 md:mt-20">
+          <div className="text-center mb-8 md:mb-12">
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-xs md:text-sm block mb-2">Top Selling</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-2 md:mb-3">Premium Products</h2>
+            <p className="text-gray-400 text-xs md:text-sm">Handpicked collection of trending fashion items loved by thousands of customers</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mb-8 md:mb-12">
             {womenProducts.slice(0, 5).map((product, index) => {
               const discount = Math.floor(Math.random() * 30) + 40;
               const rating = Math.floor(Math.random() * 2) + 4;

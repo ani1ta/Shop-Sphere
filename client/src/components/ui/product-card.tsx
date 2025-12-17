@@ -76,11 +76,11 @@ export function ProductCard({ product, className }: ProductCardProps) {
         transition={{ duration: 0.5 }}
         src={product.image}
         alt={product.name}
-        className="h-40 w-40 object-contain mix-blend-multiply drop-shadow-lg mb-4"
+        className="h-24 sm:h-32 md:h-40 w-24 sm:w-32 md:w-40 object-contain mix-blend-multiply drop-shadow-lg mb-2 md:mb-4"
       />
 
       {/* Name */}
-      <h3 className="font-bold text-white leading-tight line-clamp-2 mb-2 text-sm md:text-base" title={product.name}>
+      <h3 className="font-bold text-white leading-tight line-clamp-2 mb-1 md:mb-2 text-xs sm:text-sm md:text-base" title={product.name}>
         {product.name}
       </h3>
 

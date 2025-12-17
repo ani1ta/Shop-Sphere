@@ -102,12 +102,12 @@ export default function Shop() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="container mx-auto px-6 mb-12"
+          className="container mx-auto px-4 sm:px-6 mb-8 md:mb-12"
         >
           <div className="text-center">
-            <span className="text-orange-400 font-bold tracking-widest uppercase text-sm block mb-3">Collection</span>
-            <h1 className="text-5xl md:text-6xl font-black text-white mb-3">Shop All Products</h1>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <span className="text-orange-400 font-bold tracking-widest uppercase text-xs md:text-sm block mb-2 md:mb-3">Collection</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-2 md:mb-3">Shop All Products</h1>
+            <p className="text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg max-w-2xl mx-auto">
               Discover {products.length} premium items curated for you
             </p>
           </div>
@@ -118,10 +118,10 @@ export default function Shop() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="container mx-auto px-6 mb-10"
+          className="container mx-auto px-4 sm:px-6 mb-8 md:mb-10"
         >
-          <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 border border-gray-800 rounded-xl p-6">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 border border-gray-800 rounded-lg md:rounded-xl p-4 md:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4">
               {/* Mobile Filter */}
               <Sheet>
                 <SheetTrigger asChild>
@@ -224,14 +224,14 @@ export default function Shop() {
         </div>
 
         {/* Products Grid */}
-        <div className="container mx-auto px-6 mb-16">
+        <div className="container mx-auto px-4 sm:px-6 mb-12 md:mb-16">
           {filteredProducts.length === 0 ? (
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-20"
+              className="text-center py-12 md:py-20"
             >
-              <p className="text-gray-400 text-lg mb-6">No products found</p>
+              <p className="text-gray-400 text-sm md:text-base lg:text-lg mb-4 md:mb-6">No products found</p>
               <Button 
                 onClick={() => {
                   setSearchQuery("");
