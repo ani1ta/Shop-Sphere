@@ -1,26 +1,24 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
     {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "source": "/api/:path*",
+      "destination": "/server/index.ts"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server/index.ts"
+      "src": "/assets/(.*)",
+      "dest": "/dist/assets/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/dist/$1"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/shop(.*)",
+      "dest": "/dist/index.html"
     },
     {
       "src": "/(.*)",
