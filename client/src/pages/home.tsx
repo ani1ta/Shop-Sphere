@@ -1,23 +1,34 @@
-import { CartDrawer } from "@/components/layout/CartDrawer";
-import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { CartDrawer } from "@/components/layout/CartDrawer";
 import { WishlistDrawer } from "@/components/layout/WishlistDrawer";
+import { Footer } from "@/components/layout/Footer";
+import { ProductCard } from "@/components/ui/product-card";
+import { products, banners, categoryIcons } from "@/lib/products";
 import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "wouter";
+import {
+  ArrowRight,
+  Timer,
+  Sparkles,
+  Star,
+  MapPin,
+  Mail,
+  Heart,
+} from "lucide-react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ProductCard } from "@/components/ui/product-card";
-import { useCart } from "@/lib/cart";
-import { banners, categoryIcons, products } from "@/lib/products";
-import { cn } from "@/lib/utils";
-import { useWishlist } from "@/lib/wishlist";
 import Autoplay from "embla-carousel-autoplay";
+import { CountdownTimer } from "@/components/ui/countdown-timer";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ArrowRight, Heart, Sparkles, Star } from "lucide-react";
 import { useState } from "react";
-import { Link } from "wouter";
+import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 
 const vibrantColors = [
   "bg-orange-400",
@@ -136,6 +147,7 @@ const categoriesBar = [
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("Men");
+  const [, setLocation] = useLocation();
   const { addItem } = useCart();
   const { toggleItem, isInWishlist } = useWishlist();
 
@@ -528,7 +540,7 @@ export default function Home() {
               </div>
               <div className="flex items-end justify-between relative z-10">
                 <button
-                  onClick={() => (window.location.href = "/shop?category=Men")}
+                  onClick={() => setLocation("/shop?category=Men")}
                   className="bg-white text-blue-600 hover:bg-gray-100 rounded-full px-6 py-2 font-bold transition-all hover:scale-105"
                 >
                   Explore
@@ -560,9 +572,7 @@ export default function Home() {
               </div>
               <div className="flex items-end justify-between relative z-10">
                 <button
-                  onClick={() =>
-                    (window.location.href = "/shop?category=Women")
-                  }
+                  onClick={() => setLocation("/shop?category=Women")}
                   className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-6 py-2 font-bold transition-all hover:scale-105"
                 >
                   Explore
@@ -591,9 +601,7 @@ export default function Home() {
               </div>
               <div className="flex items-end justify-between relative z-10">
                 <button
-                  onClick={() =>
-                    (window.location.href = "/shop?category=Accessories")
-                  }
+                  onClick={() => setLocation("/shop?category=Accessories")}
                   className="bg-white text-pink-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold transition-all hover:scale-105"
                 >
                   Shop
@@ -622,9 +630,7 @@ export default function Home() {
               </div>
               <div className="flex items-end justify-between relative z-10">
                 <button
-                  onClick={() =>
-                    (window.location.href = "/shop?category=Footwear")
-                  }
+                  onClick={() => setLocation("/shop?category=Footwear")}
                   className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-5 py-2 text-sm font-bold transition-all hover:scale-105"
                 >
                   Shop
