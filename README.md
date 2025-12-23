@@ -32,128 +32,6 @@ Our signature logo features a distinctive **orange rounded square** with a **bla
 
 ---
 
-## 🛒 Features
-
-### Product Showcase
-- **Responsive Grid Layouts**: 
-  - Mobile: 2 columns
-  - Tablet: 3 columns
-  - Desktop: 4-5 columns
-- **Product Cards**: Detailed product information with images, pricing, and ratings
-- **Category Filtering**: Browse fashion, footwear, and accessories by category
-
-### Shopping Functionality
-- **Shopping Cart**: Add/remove items with quantity adjustments
-- **Wishlist**: Save favorite items for later
-- **Product Details**: Comprehensive product pages with descriptions, images, and reviews
-- **Checkout**: Streamlined purchase experience
-
-### Navigation
-- **Responsive Navbar**: Adaptive menu for all screen sizes
-- **Mobile Menu**: Hamburger menu with full navigation
-- **Footer Navigation**: Quick links to shop, about, contact
-- **Category Links**: Direct access to product categories
-
----
-
-## 🏗️ Project Structure
-
-```
-client/
-├── src/
-│   ├── pages/
-│   │   ├── home.tsx          # Home/landing page
-│   │   ├── shop.tsx          # Shop page with product listings
-│   │   └── product.tsx       # Individual product detail page
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Navbar.tsx    # Navigation with logo
-│   │   │   └── Footer.tsx    # Footer with logo and links
-│   │   ├── CartDrawer.tsx    # Shopping cart sidebar
-│   │   ├── WishlistDrawer.tsx # Wishlist sidebar
-│   │   ├── product-card.tsx  # Product card component
-│   │   └── ui/               # Shadcn UI components
-│   ├── App.tsx               # Main app component with routing
-│   └── main.tsx              # Entry point
-├── index.html                # HTML template with meta tags
-└── styles/                   # Global styles
-
-public/
-└── favicon.png              # PRISMA orange star logo
-```
-
----
-
-## 🚀 Technology Stack
-
-- **Framework**: React with TypeScript
-- **Styling**: Tailwind CSS with custom configurations
-- **Routing**: Wouter for client-side navigation
-- **Icons**: Lucide React for consistent iconography
-- **UI Components**: Radix UI with Shadcn UI
-- **Forms**: React Hook Form with Zod validation
-- **Build Tool**: Vite for fast development and optimized builds
-- **Animations**: Framer Motion for smooth transitions
-
----
-
-## 📱 Responsive Breakpoints
-
-PRISMA is built mobile-first with Tailwind breakpoints:
-
-| Breakpoint | Size | Usage |
-|-----------|------|-------|
-| **sm** | 640px | Small phones |
-| **md** | 768px | Tablets |
-| **lg** | 1024px | Laptops |
-| **xl** | 1280px | Large screens |
-
-All components adapt seamlessly across these breakpoints.
-
----
-
-## 🎯 Key Pages
-
-### Home Page (`/`)
-- Hero banner with PRISMA branding
-- Featured products section
-- Category highlights
-- Call-to-action buttons
-
-### Shop Page (`/shop`)
-- Complete product catalog
-- Category filtering
-- Product grid with responsive layout
-- Add to cart/wishlist from listings
-
-### Product Detail Page (`/product/:id`)
-- Detailed product information
-- Product images and specifications
-- Customer reviews and ratings
-- Add to cart with quantity selector
-- Similar products recommendation
-
----
-
-## 🎨 Customization
-
-### Updating Colors
-Modify the Tailwind theme in `tailwind.config.js`:
-```javascript
-orange: '#ff8c00' // PRISMA primary accent
-```
-
-### Changing Typography
-Update font imports in `client/index.html`:
-```html
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
-```
-
-### Adding Products
-Update the mock product data in component state or props.
-
----
-
 ## 🚀 Getting Started
 
 ### Installation
@@ -170,41 +48,27 @@ npm run dev:client
 ```bash
 npm run build
 ```
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/980dc652-53d1-4f19-b252-0cef930aba07" />
 
----
 
-## 📍 Location
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ff88eae5-fddd-4ca4-b9c8-2bc5017666dd" />
 
-**PRISMA** is headquartered in **Mumbai, India** and proudly serves customers globally.
 
----
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f2212bed-a862-4edb-bb27-339742456d8e" />
 
-## 📝 Design Philosophy
 
-PRISMA embodies:
-- **Premium Aesthetics**: Luxury dark theme with sophisticated design
-- **User-Centric**: Intuitive navigation and seamless shopping experience
-- **Responsive Excellence**: Perfect experience on every device
-- **Performance**: Fast loading, smooth interactions, optimized assets
-- **Accessibility**: Clear typography, sufficient contrast, keyboard navigation
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/de0c8392-d918-4438-8efc-f3786259829e" />
 
----
 
-## 🌟 Features in Development
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/eb438ff5-80e6-4973-b56a-84ffeb0a31de" />
 
-- User accounts and authentication
-- Order history and tracking
-- Payment gateway integration
-- Customer reviews and ratings
-- Wishlist persistence
-- Personalized recommendations
 
----
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/10032c34-f73c-441b-92ac-321fe679f1fe" />
 
-## 📄 License
 
-This project is part of the PRISMA premium e-commerce initiative.
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/04248dbe-01ee-40d4-b8a6-43ab9abfd656" />
 
----
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/29390d89-c233-406a-a7bb-51f4ab6bf08c" />
 
-**Experience Premium Shopping with PRISMA** 🛍️✨
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6be73486-1509-4185-a1e3-53b9c23d4d4a" />
